@@ -7,7 +7,7 @@
   (helper 1 a))
 
 (define (factorial n)
-  (product (lambda (x) (* x 1)) 1 (lambda (x) (+ x 1)) (lambda (x) (> x n))))
+  (product (lambda (x) x) 1 (lambda (x) (+ x 1)) (lambda (x) (> x n))))
 
 (define (approximate-pi terms)
   (define (next x)
@@ -16,4 +16,4 @@
   (letrec ((b (if (even? terms) (/ (+ terms 2) (+ terms 1))
                   (/ (+ terms 1) (terms 2))))
            (terminate (lambda (x) (> (numerator x) (numerator b)))))
-    (exact->inexact (* 4 (product (lambda (x) (* x 1)) 2/3 next terminate)))))
+    (exact->inexact (* 4 (product (lambda (x) x) 2/3 next terminate)))))
