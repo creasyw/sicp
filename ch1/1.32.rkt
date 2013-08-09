@@ -15,7 +15,7 @@
   (accumulate * 1 term a next (lambda (x) (> x b))))
 
 ;; test sum
-(sum (lambda (x) (+ x 0)) 1 (lambda (x) (+ x 1)) 10)
+(sum (lambda (x) x) 1 (lambda (x) (+ x 1)) 10)
 
 ;; test product
-(product (lambda (x) (+ x 0)) 1 (lambda (x) (+ x 1)) 10)
+(product (lambda (x) x) 1 (lambda (x) (+ x 1)) 10)
