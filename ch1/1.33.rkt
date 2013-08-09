@@ -19,7 +19,7 @@
 
 ;; product of all positive integers smaller than and relatively prime to n
 (define (product-coprime n)
-  (filtered-cumulate * 1 (lambda (x) (= 1 (gcd x n))) (lambda (x) (+ x 0))
+  (filtered-cumulate * 1 (lambda (x) (= 1 (gcd x n))) (lambda (x) x)
                      2 (lambda (x) (+ x 1)) (lambda (x) (>= x n))))
 (product-coprime 100)
 ;; benchmark
