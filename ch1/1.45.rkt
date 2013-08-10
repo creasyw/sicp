@@ -8,9 +8,6 @@
 
 ;; related to contents in 1.36
 
-(define (average-damping f)
-  (lambda (x) (/ (+ x (f x)) 2)))
-
 (define (square-root x)
   (lambda (y) (exact->inexact (/ x y))))
 
