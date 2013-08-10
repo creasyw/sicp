@@ -3,6 +3,11 @@
 (provide fixed-point)
 (provide fixed-point-print)
 (provide newtons-method)
+(provide iterative-improve)
+(provide average-damping)
+
+(define (average-damping f)
+  (lambda (x) (/ (+ x (f x)) 2)))
 
 (define (fixed-point f first-guess)
   (define tolerance 0.00001)
@@ -13,6 +18,14 @@
       (if (close-enough? guess next) next
           (try next))))
   (try first-guess))
+
+(define (iterative-improve good? improve)
+  (lambda (initial)
+    (define (helper current)
+      (letrec ((next (improve current)))
+        (if (good? current next) next
+            (helper next))))
+    (helper initial)))
 
 ;; the same functionality as fixed-point
 ;; but adding print info at each iteration
