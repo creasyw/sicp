@@ -1,4 +1,5 @@
 #lang racket
+(provide (all-defined-out))
 
 (define (variable? x) (symbol? x))
 (define (same-variable? v1 v2)
@@ -46,6 +47,6 @@
          (error "unknown expression type -- DERIV" exp))))
 
 ;; test deriv
-(deriv '(+ x 3) 'x)
-(deriv '(* x y) 'x)
-(deriv '(* (* x y) (+ x 3)) 'x)
+;(deriv '(+ x 3) 'x)
+;(deriv '(* x y) 'x)
+;(deriv '(* (* x y) (+ x 3)) 'x)
