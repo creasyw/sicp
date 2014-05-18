@@ -31,6 +31,24 @@
 (define (multiplier x) (car x))
 (define (multiplicand x) (caddr x))
 
+(define (parse exp)
+  (displayln exp)
+  (cond ((sum? exp)
+         (if (<= (length exp) 3)
+             exp
+             (append (take exp 2) (list (parse (drop exp 2))))))
+        ((product? exp)
+         (cond ((list? (multiplicand exp))
+             (append (take exp 2) (list (parse (multiplicand exp))) (drop exp 3)))
+               ((<= (length exp) 3) exp)
+               (#t (parse (append (list (take exp 3)) (drop exp 3))))))
+
+        (#t (error "unknown expression type -- DERIV" exp))))
+
+;; test parse
+(parse '(x + 3 * (x + y + 2)))
+(parse '(3 * x + 3 * ( x + y + 3 * 2)))
+
 (define (deriv exp var)
   (cond ((number? exp) 0)
         ((variable? exp)
