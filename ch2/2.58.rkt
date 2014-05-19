@@ -62,9 +62,12 @@
            (make-product (multiplier exp)
                          (deriv (multiplicand exp) var))
            (make-product (deriv (multiplier exp) var)
-                         (multiplicand exp))))
-        (else
-         (error "unknown expression type -- DERIV" exp))))
+                         (multiplicand exp))))))
+
+(define (std_deriv exp var)
+  (deriv (parse exp) var))
 
 ;; test deriv
 (deriv '(x + (3 * (x + (y + 2)))) `x)
+(std_deriv '(x + 3 * (x + y + 2)) 'x)
+(std_deriv '(3 * x + 3 * ( x + y + 3 * 2)) 'x)
