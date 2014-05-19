@@ -1,6 +1,7 @@
 #lang racket
 
 (require (except-in  "2.59.rkt" adjoin-set))
+(provide build-set)
 
 (define (build-set lst)
   (if (<= (length lst) 1)
