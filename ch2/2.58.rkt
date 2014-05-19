@@ -31,6 +31,11 @@
 (define (multiplier x) (car x))
 (define (multiplicand x) (caddr x))
 
+;; it's easier to add one more block of function in the "stratified
+;; design" diagram rather than changing all predicate, selector, and
+;; constructor as the question suggested.
+;; This function will check the validity of input expression and add
+;; all necessary paratheses.
 (define (parse exp)
   (cond ((sum? exp)
          (if (<= (length exp) 3)
@@ -38,10 +43,10 @@
              (append (take exp 2) (list (parse (drop exp 2))))))
         ((product? exp)
          (cond ((list? (multiplicand exp))
-             (append (take exp 2) (list (parse (multiplicand exp))) (drop exp 3)))
+                (append (take exp 2) (list (parse (multiplicand exp))) (drop exp 3)))
                ((<= (length exp) 3) exp)
                (#t (parse (append (list (take exp 3)) (drop exp 3))))))
-
+        
         (#t (error "unknown expression type -- DERIV" exp))))
 
 ;; test parse
@@ -59,10 +64,10 @@
                    (deriv (augend exp) var)))
         ((product? exp)
          (make-sum
-           (make-product (multiplier exp)
-                         (deriv (multiplicand exp) var))
-           (make-product (deriv (multiplier exp) var)
-                         (multiplicand exp))))))
+          (make-product (multiplier exp)
+                        (deriv (multiplicand exp) var))
+          (make-product (deriv (multiplier exp) var)
+                        (multiplicand exp))))))
 
 (define (std_deriv exp var)
   (deriv (parse exp) var))
