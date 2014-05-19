@@ -22,3 +22,17 @@
 ;(intersection-set '() '())
 ;(intersection-set '() (list 1 2 3))
 ;(intersection-set (list 1 2 3) '())
+
+(define (adjoin-set x s1)
+  (define (insert acc)
+    (cond ((null? acc) (append s1 (list x)))
+          ((< (car acc) x) (insert (cdr acc)))
+          ((= (car acc) x) s1)
+          (#t (append (take s1 (- (length s1) (length acc))) (list x) acc))))
+  (insert s1))
+
+;; test adjoin-set
+;(adjoin-set 5 (list 1 2 3))
+;(adjoin-set -4 (list 1 2 3))
+;(adjoin-set 2 (list 1 2 3))
+;(adjoin-set 5 '())
