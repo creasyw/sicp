@@ -32,7 +32,6 @@
 (define (multiplicand x) (caddr x))
 
 (define (parse exp)
-  (displayln exp)
   (cond ((sum? exp)
          (if (<= (length exp) 3)
              exp
@@ -46,9 +45,11 @@
         (#t (error "unknown expression type -- DERIV" exp))))
 
 ;; test parse
-(parse '(x + 3 * (x + y + 2)))
-(parse '(3 * x + 3 * ( x + y + 3 * 2)))
+;(parse '(x + 3 * (x + y + 2)))
+;(parse '(3 * x + 3 * ( x + y + 3 * 2)))
 
+;; delete the type checking of "unknown check" in deriv
+;; and move it to the parse procedure
 (define (deriv exp var)
   (cond ((number? exp) 0)
         ((variable? exp)
