@@ -1,4 +1,5 @@
 #lang racket
+(provide (all-defined-out))
 
 (define (entry tree) (car tree))
 (define (left-branch tree) (cadr tree))
