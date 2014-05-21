@@ -26,3 +26,6 @@
 ;; builds the left-tree, and then from the deapest level of left-tree
 ;; it completes each corresponding right-tree part. The current root
 ;; will be returned as handler of the entire tree.
+;; b)
+;; Because this algo will traverse each node once, the overall
+;; complexity is O(N).
