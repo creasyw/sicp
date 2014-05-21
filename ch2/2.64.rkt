@@ -1,6 +1,7 @@
 #lang racket
 
 (require "binary_tree_set.rkt")
+(provide list->tree)
 
 (define (list->tree elements)
   (car (partial-tree elements (length elements))))

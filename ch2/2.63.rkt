@@ -3,6 +3,8 @@
 ;; import all functions defining tree structure
 (require "binary_tree_set.rkt")
 
+(provide tree->list)
+
 (define (tree->list-1 tree)
   (if (null? tree)
       '()
@@ -10,7 +12,8 @@
               (cons (entry tree)
                     (tree->list-1 (right-branch tree))))))
 
-(define (tree->list-2 tree)
+;; (define (tree->list-2 tree)
+(define (tree->list tree)
   (define (copy-to-list tree result)
     (if (null? tree)
         result
