@@ -1,5 +1,7 @@
 #lang racket
 
+(provide union-set)
+
 ;; because both intersection and union build on the assumption that
 ;; items of sets are in increasing order, they do not need the func
 ;; element-of-set? anymore.
