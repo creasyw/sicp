@@ -1,6 +1,7 @@
 #lang racket
 
 (provide element-of-set?)
+(provide intersection-set)
 
 (define (element-of-set? x s1)
   (cond ((null? s1) false)
