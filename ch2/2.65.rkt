@@ -2,6 +2,8 @@
 
 ;; import basic tree definitions
 (require "binary_tree_set.rkt")
+;; import intersection-set
+(require (only-in "2.61.rkt" intersection-set))
 ;; import union-set with O(N) for ordered list
 (require "2.62.rkt")
 ;; import tree->list
@@ -19,3 +21,8 @@
   (letrec ((lst1 (tree->list s1))
            (lst2 (tree->list s2)))
     (list->tree (union-set lst1 lst2))))
+
+(define (intersection-set-tree s1 s2)
+  (letrec ((lst1 (tree->list s1))
+           (lst2 (tree->list s2)))
+    (list->tree (intersection-set s1 s2))))
