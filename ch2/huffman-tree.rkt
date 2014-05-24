@@ -53,9 +53,12 @@
         (#t (cons (car s)
                   (adjoin-set x (cdr s))))))
 
+;; transform the list of pairs (symbol weight) into standard leaf
+;; format (using make-leaf), and then put all leafs in order with the
+;; help of adjoin-set
 (define (make-leaf-set pairs)
   (if (null? pairs)
       '()
       (let ((pair (car pairs)))
-        (adjoin-set (make-leaf (car pair) (cadr pair)) ;(symbol, weight)
+        (adjoin-set (make-leaf (car pair) (cadr pair))
                     (make-leaf-set (cdr pairs))))))
