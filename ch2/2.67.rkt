@@ -12,3 +12,4 @@
 (define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
 
 (displayln (decode sample-message sample-tree))
+;; the result is '(A D A B B C A)
