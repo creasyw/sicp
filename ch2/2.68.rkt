@@ -1,6 +1,7 @@
 #lang racket
 
 (require "huffman-tree.rkt")
+(provide encode)
 
 ;; example tree decoding/encoding tree
 (define sample-tree
@@ -28,5 +29,6 @@
       (error "The symbol:" symbol " cannot be encoded -- ENCODE-SYMBOL")
       (helper '() tree)))
 
-(encode '(A D A B B C A) sample-tree)
+;; testing
 ;; the result is '(0 1 1 0 0 1 0 1 0 1 1 1 0)
+;(encode '(A D A B B C A) sample-tree)
