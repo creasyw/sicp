@@ -16,6 +16,8 @@
       (error "Bad tagged datum -- CONTENTS" datum)))
 
 
+;; two different implementations of complex number
+;; rectangular
 (define (install-rectangular-package)
   ;; internal representations
   (define (real-part z) (car z))
@@ -40,6 +42,7 @@
        (lambda (r a) (tag (make-from-mag-ang r a))))
   'done)
 
+;; polar
 (define (install-polar-package)
   ;; internal procedures
   (define (magnitude z) (car z))
@@ -50,7 +53,7 @@
   (define (imag-part z)
     (* (magnitude z) (sin (angle z))))
   (define (make-from-real-imag x y)
-    (cons (sqrt (+ (expt x 2) (expt y 2)))
+    (cons (sqrt (+ (expt x 2) (expt y 2.)))
           (atan y x)))
   ;; interface to the rest of the system
   (define (tag x) (attach-tag 'polar x))
@@ -63,3 +66,23 @@
   (put 'make-from-mag-ang 'polar
        (lambda (r a) (tag (make-from-mag-ang r a))))
   'done)
+
+;; selector accessing the table that has two implementations
+(define (apply-generic op . args)
+  (letrec ((type-tags (map type-tag args))
+           (proc (get op type-tags)))
+    (if proc
+        (apply proc (map contents args))
+        (error "No method for these types -- APPLY-GENERIC"
+               (list op type-tags)))))
+
+(define (real-part z) (apply-generic 'real-part z))
+(define (imag-part z) (apply-generic 'imag-part z))
+(define (magnitude z) (apply-generic 'magnitude z))
+(define (angle z) (apply-generic 'angle z))
+
+;; constructor for new inputs
+(define (make-from-real-imag x y)
+  ((get 'make-from-real-imag 'rectangular) x y))
+(define (make-from-mag-ang r a)
+  ((get 'make-from-mag-ang 'polar) r a))
