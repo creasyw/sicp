@@ -2,7 +2,7 @@
 
 ;; import get, put
 (require "complext_num_table.rkt")
-
+(provide (all-defined-out))
 ;; tagging
 (define (attach-tag type-tag contents)
   (cons type-tag contents))
