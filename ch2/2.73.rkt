@@ -10,3 +10,6 @@
 
 (define (operator exp) (car exp))
 (define (operands exp) (cdr exp))
+
+;; a) The data representation in this flow cannot be either a number
+;; or a variable, because the operator cannot operate on them.
