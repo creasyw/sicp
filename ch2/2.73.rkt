@@ -39,36 +39,23 @@
                    (deriv (multiplicand exp) var))
      (make-product (deriv (multiplier exp) var)
                    (multiplicand exp))))
-
-  (define (deriv exp var)
-    (cond ((number? exp) 0)
-          ((variable? exp) (if (same-variable? exp var) 1 0))
-          ;; the "get" actually determines what to implement
-          (else ((get 'deriv (operator exp)) (operands exp)
-                 var))))
-
+  
   ;; implementation of deriv-exponential
   ;; predicate
-  (define (exponential? x)
-    (and (pair? x) (eq? (cadr x) '** )))
-  (define (base exp) (car exp))
-  (define (exponent exp) (caddr exp))
-  (define (make-exponentiation base exponent)
-    (cond ((= exponent 0) 1)
-          ((= exponent 1) base)
-          (#t (list base '** exponent))))
-  (define (deriv-exponential exp var)
-    (cond ((exponential? exp)
-           (letrec ((n (exponent exp))
-                    (b (base exp)))
-             (make-product n (make-product
-                              (make-exponentiation b (- n 1))
-                              (new-deriv b var)))))
-          (#t (deriv exp var))))
-
-  (define (operator exp) (car exp))
-  (define (operands exp) (cdr exp))
-
+  (define (make-exponentiation base exp)
+    (cond ((=number? exp 0) 1)
+          ((=number? exp 1) base)
+          (else (list '** base exp))))
+  (define (base opds) (car opds))
+  (define (exponent opds) (cadr opds))
+  (define (deriv-exponential opds var)
+    (make-product
+     (exponent opds)
+     (make-product
+      (make-exponentiation (base opds)
+                           (make-sum (exponent opds) (- 1)))
+      (deriv (base opds) var))))
+  
   ;; interface
   (put 'deriv '+ deriv-sum)
   (put 'deriv '* deriv-product)
