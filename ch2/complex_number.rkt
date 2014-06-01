@@ -15,7 +15,6 @@
       (cdr datum)
       (error "Bad tagged datum -- CONTENTS" datum)))
 
-
 ;; two different implementations of complex number
 ;; rectangular
 (define (install-rectangular-package)
@@ -31,6 +30,7 @@
   (define (make-from-mag-ang r a)
     (cons (* r (cos a)) (* r (sin a))))
   ;; interface
+  ;; actually install operations with certain tags into the table
   (define (tag x) (attach-tag 'rectangular x))
   (put 'real-part '(rectangular) real-part)
   (put 'imag-part '(rectangular) imag-part)
