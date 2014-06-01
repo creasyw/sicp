@@ -76,3 +76,16 @@
 
 (define (operator exp) (car exp))
 (define (operands exp) (cdr exp))
+
+; tests
+;(install-deriv-package)
+;(deriv '(** x 4) 'x)
+;; Value: (* 4 (** x 3))
+;(deriv '(** x n) 'x)
+;; Value: (* n (** x (+ n -1)))
+;(deriv '(+ (* 3 x) y) 'x)
+;; Value: 3
+;(deriv '(** (+ (* 3 x) y) 1) 'x)
+;; Value: 3
+;(deriv '(** (+ (** x 2) 1) 2) 'x)
+;; Value: (* 2 (* (+ (** x 2) 1) (* 2 x)))
