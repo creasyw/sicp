@@ -19,12 +19,25 @@
 ;; The generic record should contain the division name
 ;; and the original record.
 (define (get-salary generic-record)
-    ((get 'get-salary (division generic-record))
-        (original-record generic-record)))
+  ((get 'get-salary (division generic-record))
+   (original-record generic-record)))
 
 (define (make-generic-record division record)
-    (cons division record))
+  (cons division record))
 (define (division generic-record)
-    (car generic-record))
+  (car generic-record))
 (define (original-record generic-record)
-    (cdr generic-record))
+  (cdr generic-record))
+
+;; c)
+;; Each division needs to implement a predicate
+;; in-this-division?.
+(define (find-employee-record employee files)
+  (cond ((null? files) (error "unknown employee" employee))
+        ((in-this-division? employee (division (car files)))
+         (get-record employee (car files)))
+        (else (find-employee-record
+               employee (cdr files)))))
+
+(define (in-this-division? employee division)
+  ((get 'in-this-division? division) employee))
