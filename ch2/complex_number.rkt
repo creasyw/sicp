@@ -53,7 +53,7 @@
   (define (imag-part z)
     (* (magnitude z) (sin (angle z))))
   (define (make-from-real-imag x y)
-    (cons (sqrt (+ (expt x 2) (expt y 2.)))
+    (cons (sqrt (+ (expt x 2) (expt y 2)))
           (atan y x)))
   ;; interface to the rest of the system
   (define (tag x) (attach-tag 'polar x))
