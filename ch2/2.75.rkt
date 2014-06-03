@@ -2,6 +2,7 @@
 
 (require (except-in "complex_number.rkt" make-from-real-imag make-from-mag-ang))
 
+;; lecture note example
 (define (make-from-real-imag x y)
   (define (dispatch op)
     (cond ((eq? op 'real-part) x)
@@ -12,6 +13,7 @@
           (#t (error "Unknow op -- MAKE-FROM-REAL-IMAG" op))))
   dispatch)
 
+;; sol
 (define (make-from-mag-ang r a)
   (define (dispatch op)
     (cond ((eq? op 'real-part) (* r (cos a)))
