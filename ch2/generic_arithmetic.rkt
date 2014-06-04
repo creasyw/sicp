@@ -20,3 +20,6 @@
   (put 'make 'custom-number
        (lambda (x) (tag x)))
   'done)
+;; constructor
+(define (make-number n)
+  ((get 'make 'custom-number) n))
