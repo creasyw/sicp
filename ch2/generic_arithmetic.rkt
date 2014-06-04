@@ -5,6 +5,7 @@
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 
+;; ordinary number
 (define (install-number-package)
   (define (tag x)
     (attach-tag 'custom-number x))
