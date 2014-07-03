@@ -2,6 +2,9 @@
 
 ;; import type-tag, attach-tag, and contents
 (require "2.78.rkt")
+;; import get, put
+(require "complex_num_table.rkt")
+
 
 (provide (all-defined-out))
 
@@ -11,6 +14,7 @@
 (define (div x y) (apply-generic 'div x y))
 
 ;; ordinary number
+;; tag: custom-number
 (define (install-number-package)
   (define (tag x)
     (attach-tag 'custom-number x))
@@ -32,11 +36,13 @@
 ;; rational number
 (define (install-rational-package)
   ;; internal procedures
+  ;; basic dispatch
   (define (numer x) (car x))
   (define (denom x) (cdr x))
   (define (make-rat n d)
     (let ((g (gcd n d)))
       (cons (/ n g) (/ d g))))
+  ;; basic operations
   (define (add-rat x y)
     (make-rat (+ (* (numer x) (denom y))
                  (* (numer y) (denom x)))
@@ -52,6 +58,7 @@
     (make-rat (* (numer x) (denom y))
               (* (denom x) (numer y))))
   ;; interface to rest of the system
+  ;; put anonymous functions into the table of rational number
   (define (tag x) (attach-tag 'rational x))
   (put 'add '(rational rational)
        (lambda (x y) (tag (add-rat x y))))
@@ -65,7 +72,10 @@
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
   'done)
+
 ;; constructor
+;; similar two-layer encapsulation of functions within package to the
+;; "put" and "get" in complex_num_table.rkt
 (define (make-rational n d)
   ((get 'make 'rational) n d))
 
