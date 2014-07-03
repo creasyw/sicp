@@ -4,6 +4,11 @@
 (require compatibility/mlist)
 (provide (all-defined-out))
 
+;; a nice way to encapsulate functions: the chain of reaction is from
+;; function "get" --> tag "'lookup-proc" --> local function "lookup".
+;; On the other hand, operation-table --> make-table --> dispatch is
+;; used to encapsulate the dispatch function.
+
 (define (make-table)
   (let ((local-table (mlist '*table*)))
     (define (lookup key-1 key-2)
@@ -33,8 +38,6 @@
             ((eq? m 'insert-proc!) insert!)
             (else (error "Unknown operation -- TABLE" m))))
     dispatch))
-
-
 
 (define operation-table (make-table))
 (define get (operation-table 'lookup-proc))
