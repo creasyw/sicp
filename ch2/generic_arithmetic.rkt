@@ -1,7 +1,12 @@
 #lang racket
 
-;; import type-tag, attach-tag, and contents
+;; import type-tag, attach-tag, contents
 (require "2.78.rkt")
+;; import only two packages without other local functions
+(require (only-in "complex_number.rkt"
+                  install-rectangular-package
+                  install-polar-package))
+
 ;; import get, put
 (require "complex_num_table.rkt")
 
