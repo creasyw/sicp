@@ -34,7 +34,10 @@
   (put 'make 'custom-number
        (lambda (x) (tag x)))
   'done)
-;; constructor
+;; constructor.
+;; the tag 'make is a dummy coordinate for the 2d table, which is the
+;; same for the rational number, but it will make more sense for the
+;; complex number, because the latter one has two approaches to make.
 (define (make-number n)
   ((get 'make 'custom-number) n))
 
@@ -91,6 +94,11 @@
     ((get 'make-from-real-imag 'rectangular) x y))
   (define (make-from-mag-ang r a)
     ((get 'make-from-mag-ang 'polar) r a))
+  ;; basic operations
+  (put 'real-part '(complex) real-part)
+  (put 'imag-part '(complex) imag-part)
+  (put 'magnitude '(complex) magnitude)
+  (put 'angle '(complex) angle)
   ;; internal procedures
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
@@ -118,12 +126,27 @@
        (lambda (x y) (tag (make-from-real-imag x y))))
   (put 'make-from-mag-ang 'complex
        (lambda (r a) (tag (make-from-mag-ang r a))))
+
+  ;; define the coercion towards basic 'custom-number
+  (define (number->complex n)
+    (make-complex-from-real-imag (contents n) 0))
+  ;; only take the real part if coercion is from complex to ragular number
+  (define (complex->number n)
+    (make-number (real-part n)))
+  (put 'custom-number 'complex number->complex)
+  (put 'complex 'custom-number complex->number)
+
   'done)
 ;; constructors for both representations
 (define (make-complex-from-real-imag x y)
     ((get 'make-from-real-imag 'complex) x y))
 (define (make-complex-from-mag-ang r a)
     ((get 'make-from-mag-ang 'complex) r a))
+
+
+
+(define (get-coercion type1 type2) get type1 type2)
+
 
 (define (apply-generic op . args)
   (letrec ((type-tags (map type-tag args))
@@ -137,7 +160,7 @@
                      (a2 (cadr args))
                      (t1->t2 (get-coercion type1 type2))
                      (t2->t1 (get-coercion type2 type1)))
-              (cond (t1->t2 (apply-genericop (t1->t2 a1) a2))
+              (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
                     (t2->t1 (apply-generic op a1 (t2->t1 a2)))
                     (#t error "No method for these types" (list op type-tags))))
             (error "No method for these types" (list op type-tags))))))
