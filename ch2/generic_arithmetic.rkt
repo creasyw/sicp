@@ -1,7 +1,5 @@
 #lang racket
 
-;; import type-tag, attach-tag, contents
-(require "2.78.rkt")
 ;; import only two packages without other local functions
 (require (only-in "complex_number.rkt"
                   install-rectangular-package
@@ -147,6 +145,20 @@
 
 (define (get-coercion type1 type2) get type1 type2)
 
+;; these three functions are copied from 2.78 for the integrity of the
+;; whole module
+(define (type-tag datum)
+  (cond ((pair? datum) (car datum))
+        ((number? datum) 'custom-number)
+        (#t (error "Bad tagged datum -- TYPE-TAG" datum))))
+(define (contents datum)
+  (cond ((pair? datum) (cdr datum))
+        ((number? datum) datum)
+        (#t (error "Bad tagged datum -- CONTENTS" datum))))
+(define (attach-tag type-tag contents)
+  (if (number? contents)
+      contents
+      (cons type-tag contents)))
 
 (define (apply-generic op . args)
   (letrec ((type-tags (map type-tag args))
