@@ -161,11 +161,15 @@
       (cons type-tag contents)))
 
 (define (apply-generic op . args)
+  ;; 1. retrieve tag from the given data
+  ;; 2. retrieve corresponding operations from table based on tag
   (letrec ((type-tags (map type-tag args))
            (proc (get op type-tags)))
     (if proc
         (apply proc (map contents args))
         (if (= (length args) 2)
+            ;; pattern matching both types from data and check which
+            ;; direction of the coercion could be performed
             (letrec ((type1 (car type-tags))
                      (type2 (cadr type-tags))
                      (a1 (car args))
@@ -175,4 +179,4 @@
               (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
                     (t2->t1 (apply-generic op a1 (t2->t1 a2)))
                     (#t error "No method for these types" (list op type-tags))))
-            (error "No method for these types" (list op type-tags))))))
+            (error "The operation should be applied to two arguments." (list op type-tags))))))
