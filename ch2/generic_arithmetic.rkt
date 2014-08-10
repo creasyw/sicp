@@ -164,8 +164,12 @@
   ;; 1. retrieve tag from the given data
   ;; 2. retrieve corresponding operations from table based on tag
   (letrec ((type-tags (map type-tag args))
+           ;; because all packages installed above define oeprations
+           ;; within the same data type, the proc would be "false" if
+           ;; two items of type-tags are different types
            (proc (get op type-tags)))
     (if proc
+        ;; extract contents from data and perform the operation
         (apply proc (map contents args))
         (if (= (length args) 2)
             ;; pattern matching both types from data and check which
@@ -174,6 +178,9 @@
                      (type2 (cadr type-tags))
                      (a1 (car args))
                      (a2 (cadr args))
+                     ;; it requires only one of the coercion works
+                     ;; normally, the direction should be from simple
+                     ;; to more complex data type
                      (t1->t2 (get-coercion type1 type2))
                      (t2->t1 (get-coercion type2 type1)))
               (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
