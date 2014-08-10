@@ -45,9 +45,13 @@
   ;; basic dispatch
   (define (numer x) (car x))
   (define (denom x) (cdr x))
+  ;; setter
   (define (make-rat n d)
     (let ((g (gcd n d)))
       (cons (/ n g) (/ d g))))
+  ;; getter
+  (define (get-rat x)
+    (/ (exact->inexact (numer x) (denom x))))
   ;; basic operations
   (define (add-rat x y)
     (make-rat (+ (* (numer x) (denom y))
@@ -77,6 +81,8 @@
 
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
+  (put 'get 'rational
+       (labmda (x) (tag (get-rat x))))
   'done)
 
 ;; constructor
@@ -84,6 +90,9 @@
 ;; "put" and "get" in complex_num_table.rkt
 (define (make-rational n d)
   ((get 'make 'rational) n d))
+;; selector of rational number
+(define (get-rational n)
+  ((get 'get 'rational) n))
 
 ;; complex number
 (define (install-complex-package)
@@ -101,7 +110,7 @@
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
                          (+ (imag-part z1) (imag-part z2))))
-  (define (sub-complex z1 z2)
+  (d>efine (sub-complex z1 z2)
     (make-from-real-imag (- (real-part z1) (real-part z2))
                          (- (imag-part z1) (imag-part z2))))
   (define (mul-complex z1 z2)
@@ -142,8 +151,19 @@
     ((get 'make-from-mag-ang 'complex) r a))
 
 
+;; implementation of coercion
+(define (put-coercion type1 type2 op) (put op (type1 type2)))
+(define (get-coercion type1 type2) (get type1 type2))
 
-(define (get-coercion type1 type2) get type1 type2)
+(define (custom-number->complex n)
+  (make-complex-from-real-imag (contents n) 0))
+(put-coercion 'custom-number 'complex custom-number->complex)
+(define (custom-number->rational n)
+  (make-rational (contents n) 1))
+(put-coercion 'custom-number 'rational custom-number->rational)
+(define (rational->complex n)
+  (make-complex-from-real-imag (rational-value n) 0))
+(put-coercion 'rational 'complex rational->complex)
 
 ;; these three functions are copied from 2.78 for the integrity of the
 ;; whole module
