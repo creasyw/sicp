@@ -100,12 +100,18 @@
   ((get 'get 'rational) n))
 
 ;; complex number
-#;(define (install-complex-package)
+(define (install-complex-package)
   ;; imported procedures from rectangular and polar packages
   (define (make-from-real-imag x y)
     ((get 'make-from-real-imag 'rectangular) x y))
   (define (make-from-mag-ang r a)
     ((get 'make-from-mag-ang 'polar) r a))
+  ;; basic functions relevant with storing data
+  (put 'make-from-real-imag 'rectangular
+       (lambda (x y) (attach-tag 'rectangular (cons x y))))
+  (put 'make-from-mag-ang 'polar
+       (lambda (r a) (attach-tag 'polar (cons r a))))
+
   ;; basic operations
   (put 'real-part '(complex) real-part)
   (put 'imag-part '(complex) imag-part)
@@ -141,19 +147,21 @@
 
   ;; define the coercion towards complex
   (define (number->complex n)
-    (make-complex-from-real-imag (contents n) 0))
-  (put 'coercion '(custom-number complex) number->complex)
+    (make-from-real-imag (contents n) 0))
+  (put 'custom-number 'complex
+       (lambda (x) (tag (number->complex x))))
 
   (define (rational->complex n)
     (make-complex-from-real-imag (get-rational n) 0))
-  (put 'coercion '(rational complex) rational->complex)
+  (put 'rational 'complex
+       (lambda (x) (rational->complex x)))
 
   'done)
 
 ;; constructors for both representations
-#;(define (make-complex-from-real-imag x y)
+(define (make-complex-from-real-imag x y)
     ((get 'make-from-real-imag 'complex) x y))
-#;(define (make-complex-from-mag-ang r a)
+(define (make-complex-from-mag-ang r a)
     ((get 'make-from-mag-ang 'complex) r a))
 
 
