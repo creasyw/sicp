@@ -82,7 +82,7 @@
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
   (put 'get 'rational
-       (labmda (x) (tag (get-rat x))))
+       (lambda (x) (tag (get-rat x))))
   'done)
 
 ;; constructor
@@ -110,7 +110,7 @@
   (define (add-complex z1 z2)
     (make-from-real-imag (+ (real-part z1) (real-part z2))
                          (+ (imag-part z1) (imag-part z2))))
-  (d>efine (sub-complex z1 z2)
+  (define (sub-complex z1 z2)
     (make-from-real-imag (- (real-part z1) (real-part z2))
                          (- (imag-part z1) (imag-part z2))))
   (define (mul-complex z1 z2)
@@ -134,16 +134,17 @@
   (put 'make-from-mag-ang 'complex
        (lambda (r a) (tag (make-from-mag-ang r a))))
 
-  ;; define the coercion towards basic 'custom-number
+  ;; define the coercion towards complex
   (define (number->complex n)
     (make-complex-from-real-imag (contents n) 0))
-  ;; only take the real part if coercion is from complex to ragular number
-  (define (complex->number n)
-    (make-number (real-part n)))
-  (put 'custom-number 'complex number->complex)
-  (put 'complex 'custom-number complex->number)
+  (put 'coercion '(custom-number complex) number->complex)
+
+  (define (rational->complex n)
+    (make-complex-from-real-imag (get-rational n) 0))
+  (put 'coercion '(rational complex) rational->complex)
 
   'done)
+
 ;; constructors for both representations
 (define (make-complex-from-real-imag x y)
     ((get 'make-from-real-imag 'complex) x y))
@@ -152,18 +153,7 @@
 
 
 ;; implementation of coercion
-(define (put-coercion type1 type2 op) (put op (type1 type2)))
 (define (get-coercion type1 type2) (get type1 type2))
-
-(define (custom-number->complex n)
-  (make-complex-from-real-imag (contents n) 0))
-(put-coercion 'custom-number 'complex custom-number->complex)
-(define (custom-number->rational n)
-  (make-rational (contents n) 1))
-(put-coercion 'custom-number 'rational custom-number->rational)
-(define (rational->complex n)
-  (make-complex-from-real-imag (rational-value n) 0))
-(put-coercion 'rational 'complex rational->complex)
 
 ;; these three functions are copied from 2.78 for the integrity of the
 ;; whole module
