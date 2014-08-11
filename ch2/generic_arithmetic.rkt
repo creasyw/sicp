@@ -95,7 +95,7 @@
   ((get 'get 'rational) n))
 
 ;; complex number
-(define (install-complex-package)
+#;(define (install-complex-package)
   ;; imported procedures from rectangular and polar packages
   (define (make-from-real-imag x y)
     ((get 'make-from-real-imag 'rectangular) x y))
@@ -146,9 +146,9 @@
   'done)
 
 ;; constructors for both representations
-(define (make-complex-from-real-imag x y)
+#;(define (make-complex-from-real-imag x y)
     ((get 'make-from-real-imag 'complex) x y))
-(define (make-complex-from-mag-ang r a)
+#;(define (make-complex-from-mag-ang r a)
     ((get 'make-from-mag-ang 'complex) r a))
 
 
