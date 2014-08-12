@@ -82,7 +82,8 @@
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
   (put 'get 'rational
-       (lambda (x) (tag (get-rat x))))
+       (lambda (x) (get-rat x)))
+
   ;; coercion from 'custom-number to rational
   (define (number->rational n) (make-rat n 1))
   (put 'custom-number 'rational
