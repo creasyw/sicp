@@ -112,6 +112,28 @@
   (put 'make-from-mag-ang 'polar
        (lambda (r a) (attach-tag 'polar (cons r a))))
 
+  (define (real-part z)
+    (cond ((eq? (car z) 'rectangular) (car (cdr z)))
+          ((eq? (car z) 'polar)
+           (* (magnitude z) (cos (angle z))))
+          (#t (error "The tag of z is unacceptable--REAL_PART: " z))))
+  (define (imag-part z)
+    (cond ((eq? (car z) 'rectangular) (cdr (cdr z)))
+          ((eq? (car z) 'polar)
+           (* (magnitude z) (sin (angle z))))
+          (#t (error "The tag of z is unacceptable--IMAG_PART: " z))))
+  (define (magnitude z)
+    (cond ((eq? (car z) 'polar) (car (cdr z)))
+          ((eq? (car z) 'rectangular)
+           (sqrt (+ (* (real-part z) (real-part z))
+                    (* (imag-part z) (imag-part z)))))
+          (#t (error "The tag of z is unacceptable--MAGNITUDE:" z))))
+  (define (angle z)
+    (cond ((eq? (car z) 'polar) (cdr (cdr z)))
+          ((eq? (car z) 'rectangular)
+           (atan (imag-part z) (real-part z)))
+          (#t (error "The tag of z is unacceptable--ANGLE:" z))))
+
   ;; basic operations
   (put 'real-part '(complex) real-part)
   (put 'imag-part '(complex) imag-part)
