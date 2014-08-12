@@ -29,6 +29,10 @@
        (lambda (x y) (tag (* x y))))
   (put 'div '(custom-number custom-number)
        (lambda (x y) (tag (/ x y))))
+  ;; new operation for 2.79
+  ;; return a boolean, so it doesn't need to tag
+  (put 'equ '(custom-number custom-number) =)
+
   (put 'make 'custom-number
        (lambda (x) (tag x)))
   'done)
