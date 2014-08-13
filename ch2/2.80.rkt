@@ -10,3 +10,8 @@
 (install-number-package)
 (eq? #t (=zero? (make-number 0)))
 (eq? #f (=zero? (make-number 2)))
+
+(display "Testing the rational package...")
+(install-rational-package)
+(eq? #t (=zero? (make-rational 0 2)))
+(eq? #f (=zero? (make-rational 2 2)))
