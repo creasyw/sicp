@@ -192,6 +192,10 @@
   (put 'equ '(complex complex)
        (lambda (x y) (and (= (real-part x) (real-part y))
                           (= (imag-part x) (imag-part y)))))
+  ;; 2.80
+  (put '=zero? '(complex)
+       (lambda (x) (and (= (real-part x) 0)
+                        (= (imag-part x) 0))))
 
   ;; define the coercion towards complex
   (define (number->complex n)
