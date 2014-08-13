@@ -18,6 +18,13 @@
 
 ;; ordinary number
 ;; tag: custom-number
+;; either mapping to '(custom-number custom-number) or
+;; '(custom-number) depends on the number of arguments the function
+;; asks for. This actually relates to the local binding (proc (get op
+;; type-tags)) in the apply-generic. Specifically, if there are two
+;; arguments for the apply-generic, the "type-tags" would be a list of
+;; two tags, which requires "put" corresponding operation linked to a
+;; two-tags list.
 (define (install-number-package)
   (define (tag x)
     (attach-tag 'custom-number x))
