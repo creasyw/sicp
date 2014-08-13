@@ -96,6 +96,10 @@
   (put 'equ '(rational rational)
        (lambda (x y) (and (= (numer x) (numer y))
                           (= (denom x) (denom y)))))
+  ;; 2.80
+  (put '=zero? '(rational)
+       (lambda (x) (= (numer x) 0)))
+
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
   (put 'get 'rational
