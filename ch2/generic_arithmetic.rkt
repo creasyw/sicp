@@ -39,6 +39,9 @@
   ;; new operation for 2.79
   ;; return a boolean, so it doesn't need to tag
   (put 'equ '(custom-number custom-number) =)
+  ;; 2.80
+  (put '=zero? '(custom-number)
+       (lambda (x) (= x 0)))
 
   (put 'make 'custom-number
        (lambda (x) (tag x)))
