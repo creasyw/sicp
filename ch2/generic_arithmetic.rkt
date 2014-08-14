@@ -249,10 +249,10 @@
         (if (= (length args) 2)
             ;; pattern matching both types from data and check which
             ;; direction of the coercion could be performed
-            (let ((type1 (car type-tags))
-                  (type2 (cadr type-tags))
-                  (a1 (car args))
-                  (a2 (cadr args)))
+            (letrec ((type1 (car type-tags))
+                     (type2 (cadr type-tags))
+                     (a1 (car args))
+                     (a2 (cadr args)))
               (if (eq? type1 type2)
                   (error ("The operation is not defined for the given type. APPLY-GENERIC:" op))
                   (letrec ((t1->t2 (get-coercion type1 type2))
