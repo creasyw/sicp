@@ -9,3 +9,16 @@
 
 ;; c.
 ;; Refer to generic_arithmetic.rkt for implementation.
+;; for testing
+#lang racket
+
+(require "generic_arithmetic.rkt")
+(install-number-package)
+(install-rational-package)
+(install-complex-package)
+
+(apply-generic 'add (make-number 3) (make-number 5))
+(apply-generic 'sub (make-rational 5 2) (make-rational 10 21))
+(apply-generic 'mul (make-number 5) (make-complex-from-mag-ang 2 3))
+;; the problematic one
+;(apply-generic 'exp (make-number 3) (make-number 5))
