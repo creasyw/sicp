@@ -249,16 +249,18 @@
         (if (= (length args) 2)
             ;; pattern matching both types from data and check which
             ;; direction of the coercion could be performed
-            (letrec ((type1 (car type-tags))
-                     (type2 (cadr type-tags))
-                     (a1 (car args))
-                     (a2 (cadr args))
-                     ;; it requires only one of the coercion works
-                     ;; normally, the direction should be from simple
-                     ;; to more complex data type
-                     (t1->t2 (get-coercion type1 type2))
-                     (t2->t1 (get-coercion type2 type1)))
-              (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
-                    (t2->t1 (apply-generic op a1 (t2->t1 a2)))
-                    (#t error "No method for these types" (list op type-tags))))
+            (let ((type1 (car type-tags))
+                  (type2 (cadr type-tags))
+                  (a1 (car args))
+                  (a2 (cadr args)))
+              (if (eq? type1 type2)
+                  (error ("The operation is not defined for the given type. APPLY-GENERIC:" op))
+                  (letrec ((t1->t2 (get-coercion type1 type2))
+                           ;; it requires only one of the coercion works
+                           ;; normally, the direction should be from simple
+                           ;; to more complex data type
+                           (t2->t1 (get-coercion type2 type1)))
+                    (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
+                          (t2->t1 (apply-generic op a1 (t2->t1 a2)))
+                          (#t error "No method for these types" (list op type-tags))))))
             (error "The operation should be applied to two arguments." (list op type-tags))))))
