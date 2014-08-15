@@ -45,6 +45,7 @@
 
   (put 'make 'custom-number
        (lambda (x) (tag x)))
+
   'done)
 ;; constructor.
 ;; the tag 'make is a dummy coordinate for the 2d table, which is the
@@ -106,10 +107,9 @@
        (lambda (x) (get-rat x)))
 
   ;; coercion from 'custom-number to rational
-  (define (number->rational n)
-    (if (exact-integer? n)
-        (make-rat n 1)
-        (error "The real number might not be degraded to rational number:NUMBER->RATIONAL" n)))
+  ;; this only works for integer number
+  (define (number->rational n) (make-rat n 1))
+
   (put 'custom-number 'rational
        (lambda (x) (tag (number->rational x))))
 
