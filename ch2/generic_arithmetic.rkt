@@ -1,10 +1,5 @@
 #lang racket
 
-;; import only two packages without other local functions
-(require (only-in "complex_number.rkt"
-                  install-rectangular-package
-                  install-polar-package))
-
 ;; import get, put
 (require "complex_num_table.rkt")
 
