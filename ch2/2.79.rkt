@@ -16,6 +16,8 @@
 (eq? #t (equ? (make-rational 2 5) (make-rational 2 5)))
 (eq? #t (equ? (make-rational 2 5) (make-rational 4 10)))
 (eq? #f (equ? (make-rational 2 5) (make-rational 2 3)))
+;; involving coercion
+(eq? #t (equ? (make-number 5) (make-rational 10 2)))
 
 (display "Testing complex package... ")
 (install-complex-package)
