@@ -37,6 +37,11 @@
 
   (put 'make 'custom-number
        (lambda (x) (tag x)))
+  ;; raise -- either from integer to rational or real to complex
+  (put 'raise '(custom-number)
+       (lambda (x) (if (exact-integer? x)
+                       (make-rational x 1)
+                       (make-complex-from-real-imag x 0))))
 
   'done)
 ;; constructor.
@@ -93,6 +98,9 @@
        (lambda (n d) (tag (make-rat n d))))
   (put 'get 'rational
        (lambda (x) (get-rat x)))
+  ;; raise rational to real number
+  (put 'raise '(rational)
+       (lambda (x) (make-number (get-rat x))))
 
   (define (number->rational n) (make-rat n 1))
 
@@ -205,7 +213,6 @@
 ;; implementation of coercion
 (define (get-coercion type1 type2) (get type1 type2))
 
-
 (define (type-tag datum)
   (cond ((pair? datum) (car datum))
         ((number? datum) 'custom-number)
@@ -219,21 +226,41 @@
       contents
       (cons type-tag contents)))
 
+
+;; for the tagging system, one of the tricky parts is the
+;; custom-number could be either integer or real number. The former is
+;; lower than rational, but the latter is higher than rational
+
+(define (get-rank arg)
+  (letrec ((tag (type-tag arg)))
+    (cond ((eq? tag 'complex) 4)
+          ((eq? tag 'rational) 2)
+          ((eq? tag 'custom-number)
+           (if (exact-integer? (contents arg)) 1 3))
+          (#t (error "The tag of the arguments is incorrect:" arg)))))
+
 (define (apply-generic op . args)
+  ;; raising the arguments for specific times
+  (define (raise times arg)
+    (if (= times 0)
+        arg
+        (apply-to-two 'raise arg)))
+
+  (letrec ((score-list (map get-rank args))
+           (highest (foldl max 0 score-list))
+           (new-args (for/list ([times (map (lambda (x) (- highest x)) score-list)]
+                                [arg args])
+                       (raise times arg))))
+    (displayln new-args)
+    (if (= 1 (length new-args))
+        (apply-to-two op (car new-args))
+        (foldl (lambda (x y) (apply-to-two op x y)) (car new-args) (cdr new-args)))))
+
+(define (apply-to-two op . args)
+  ;(displayln args)
   (letrec ((type-tags (map type-tag args))
            (proc (get op type-tags)))
     (if proc
         (apply proc (map contents args))
-        (if (= (length args) 2)
-            (letrec ((type1 (car type-tags))
-                     (type2 (cadr type-tags))
-                     (a1 (car args))
-                     (a2 (cadr args)))
-              (if (eq? type1 type2)
-                  (error ("The operation is not defined for the given type. APPLY-GENERIC:" op))
-                  (letrec ((t1->t2 (get-coercion type1 type2))
-                           (t2->t1 (get-coercion type2 type1)))
-                    (cond (t1->t2 (apply-generic op (t1->t2 a1) a2))
-                          (t2->t1 (apply-generic op a1 (t2->t1 a2)))
-                          (#t error "No method for these types" (list op type-tags))))))
-            (error "The operation should be applied to two arguments." (list op type-tags))))))
+        (error "There is no such operation for corresponding args:" op args)
+        )))
