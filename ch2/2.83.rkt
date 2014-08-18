@@ -199,10 +199,6 @@
 (define (make-complex-from-mag-ang r a)
     ((get 'make-from-mag-ang 'complex) r a))
 
-
-;; implementation of coercion
-(define (get-coercion type1 type2) (get type1 type2))
-
 (define (type-tag datum)
   (cond ((pair? datum) (car datum))
         ((number? datum) 'custom-number)
