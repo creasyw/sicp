@@ -206,6 +206,10 @@
 ;; custom-number could be either integer or real number. The former is
 ;; lower than rational, but the latter is higher than rational
 
+;; this function is the key to make it "compatible" to further expand
+;; the tower of data types. The inherent relation between types is
+;; defined within each package. Then, as long as the "tower" has only
+;; one trace to go up and down, we could set unique ranking in this function.
 (define (get-rank arg)
   (letrec ((tag (type-tag arg)))
     (cond ((eq? tag 'complex) 4)
