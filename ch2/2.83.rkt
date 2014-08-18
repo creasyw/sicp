@@ -245,23 +245,21 @@
   (define (raise times arg)
     (if (= times 0)
         arg
-        (apply-to-two 'raise arg)))
+        (raise (- times 1) (apply-to-two 'raise arg))))
 
   (letrec ((score-list (map get-rank args))
+           (displayln score-list)
            (highest (foldl max 0 score-list))
            (new-args (for/list ([times (map (lambda (x) (- highest x)) score-list)]
                                 [arg args])
                        (raise times arg))))
-    (displayln new-args)
     (if (= 1 (length new-args))
         (apply-to-two op (car new-args))
         (foldl (lambda (x y) (apply-to-two op x y)) (car new-args) (cdr new-args)))))
 
 (define (apply-to-two op . args)
-  ;(displayln args)
   (letrec ((type-tags (map type-tag args))
            (proc (get op type-tags)))
     (if proc
         (apply proc (map contents args))
-        (error "There is no such operation for corresponding args:" op args)
-        )))
+        (error "There is no such operation for corresponding args:" op args))))
