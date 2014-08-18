@@ -180,17 +180,6 @@
        (lambda (x) (and (= (real-part x) 0)
                         (= (imag-part x) 0))))
 
-  ;; define the coercion towards complex
-  (define (number->complex n)
-    (make-from-real-imag (contents n) 0))
-  (put 'custom-number 'complex
-       (lambda (x) (tag (number->complex x))))
-
-  (define (rational->complex n)
-    (make-complex-from-real-imag (get-rational n) 0))
-  (put 'rational 'complex
-       (lambda (x) (rational->complex x)))
-
   'done)
 
 ;; constructors for both representations
