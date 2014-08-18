@@ -96,26 +96,17 @@
 
   (put 'make 'rational
        (lambda (n d) (tag (make-rat n d))))
-  (put 'get 'rational
-       (lambda (x) (get-rat x)))
+
   ;; raise rational to real number
   (put 'raise '(rational)
        (lambda (x) (make-number
                     (/ (exact->inexact (numer x)) (denom x)))))
-
-  (define (number->rational n) (make-rat n 1))
-
-  (put 'custom-number 'rational
-       (lambda (x) (tag (number->rational x))))
 
   'done)
 
 ;; constructor
 (define (make-rational n d)
   ((get 'make 'rational) n d))
-;; selector of rational number
-(define (get-rational n)
-  ((get 'get 'rational) n))
 
 ;; complex number
 (define (install-complex-package)
