@@ -214,6 +214,8 @@
            (if (exact-integer? (contents arg)) 1 3))
           (#t (error "The tag of the arguments is incorrect:" arg)))))
 
+;; getting rid of the "2 arguments" limit and replacing it with
+;; "foldl" make the procedure both more general and more compact
 (define (apply-generic op . args)
   ;; raising the arguments for specific times
   (define (raise times arg)
