@@ -100,7 +100,8 @@
        (lambda (x) (get-rat x)))
   ;; raise rational to real number
   (put 'raise '(rational)
-       (lambda (x) (make-number (get-rat x))))
+       (lambda (x) (make-number
+                    (/ (exact->inexact (numer x)) (denom x)))))
 
   (define (number->rational n) (make-rat n 1))
 
