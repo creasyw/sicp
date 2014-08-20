@@ -108,7 +108,9 @@
   (put 'raise '(rational)
        (lambda (x) (make-number
                     (/ (exact->inexact (numer x)) (denom x)))))
-
+  ;; drop a rational number to custom-number
+  (put 'drop '(rational)
+       (lambda (x) (make-number (numer x))))
   'done)
 
 ;; constructor
