@@ -241,6 +241,13 @@
         arg
         (raise (- times 1) (apply-to-two 'raise arg))))
 
+  (define (drop original-arg)
+    (letrec ((pushed-arg (apply-to-two 'drop original-arg)))
+      (if (or (= 1 (get-rank original-arg))
+              (not (apply-to-two 'equ (raise (- (get-rank original-arg) (get-rank pushed-arg)) pushed-arg) original-arg)))
+          original-arg
+          (drop pushed-arg))))
+
   (letrec ((score-list (map get-rank args))
            (displayln score-list)
            (highest (foldl max 0 score-list))
