@@ -190,6 +190,9 @@
   (put '=zero? '(complex)
        (lambda (x) (and (= (real-part x) 0)
                         (= (imag-part x) 0))))
+  ;; drop complex number to real number
+  (put 'drop '(complex)
+       (lambda (x) (make-number (real-part x))))
 
   'done)
 
