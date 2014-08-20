@@ -256,11 +256,11 @@
                        (raise times arg))))
     (if (= 1 (length new-args))
         (apply-to-two op (car new-args))
-        (foldl (lambda (x y) (apply-to-two op x y)) (car new-args) (cdr new-args)))))
+        (drop (foldl (lambda (x y) (apply-to-two op x y)) (car new-args) (cdr new-args))))))
 
 (define (apply-to-two op . args)
   (letrec ((type-tags (map type-tag args))
            (proc (get op type-tags)))
     (if proc
         (apply proc (map contents args))
-        (error "There is no such operation for corresponding args:" op args))))
+        proc)))
