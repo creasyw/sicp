@@ -42,6 +42,15 @@
        (lambda (x) (if (exact-integer? x)
                        (make-rational x 1)
                        (make-complex-from-real-imag x 0))))
+  ;; (if possible) drop real number to integer
+  ;; racket do have (inexact->exact) to transform a real number to
+  ;; rational, and then use "numerator" to "denominator" to extract
+  ;; the corresponding parts. But the reverse "raise" (exact->inexact)
+  ;; always equals to the real number, which make the testing
+  ;; procedure unnecessary, and it seems red herring using standard
+  ;; library to help the duplicated library.
+  (put 'drop '(custom-number)
+       (lambda (x) (make-number (exact-floor x))))
 
   'done)
 ;; constructor.
