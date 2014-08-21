@@ -1,11 +1,13 @@
 #lang racket
 
-;; this is a modified version of generic_arithmetic.rkt.
-;; there is no explicit coercion. The "raise" and "drop" are
-;; implemented instead. Besides, the additional considerations are:
-;; 1. decide which data type has relatively higher rank. (2.84)
-;; 2. "compatible" with later installed new level. (2.84 and 2.85)
-;; 3. dealing with more than two arguments
+;; Suppose we want to handle complex numbers whose real parts,
+;; imaginary parts, magnitudes, and angles can be either ordinary
+;; numbers, rational numbers, or other numbers we might wish to add to
+;; the system. Describe and implement the changes to the system needed
+;; to accommodate this.
+;; 1. there will be another "wrap-around" for complex number.
+;; 2. All basic operations within the original complex package have to
+;;    be "generic", including +-*/, and sin/cos
 
 ;; import get, put
 (require "complex_num_table.rkt")
