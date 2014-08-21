@@ -114,6 +114,21 @@
        (lambda (x y) (tag (mul-rat x y))))
   (put 'div '(rational rational)
        (lambda (x y) (tag (div-rat x y))))
+
+  (put 'square-root '(rational)
+       (lambda (x)
+         (if (and (integer? (sqrt (numer x)))
+                  (integer? (sqrt (denom x))))
+             (tag (make-rat (sqrt (numer x)) (sqrt (denom x))))
+             (attach-tag 'custom-number (sqrt (raise (tag x)))))))
+  (put 'sine '(rational)
+       (lambda (x) (attach-tag 'custom-number (sin (raise x)))))
+  (put 'cosine '(rational)
+       (lambda (x) (attach-tag 'custom-number (cos (raise x)))))
+  (put 'atangent '(rational rational)
+       (lambda (x y) (attach-tag 'custom-number
+                                 (atan (raise x) (raise y)))))
+
   (put 'equ '(rational rational)
        (lambda (x y) (and (= (numer x) (numer y))
                           (= (denom x) (denom y)))))
