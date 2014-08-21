@@ -24,10 +24,10 @@
 (define (sine x) (apply-generic 'sine x))
 (define (cosine x) (apply-generic 'cosine x))
 (define (atangent x y) (apply-generic 'atangent x y))
-(define (equ? x y) (apply-generic 'equ? x y))
+(define (equ? x y) (apply-generic 'equ x y))
 (define (=zero? x) (apply-generic '=zero? x))
 (define (raise x) (apply-generic 'raise x))
-(define (drop x) (apply-to-two 'drop x))
+;(define (drop x) (apply-generic 'drop x))
 
 ;; ordinary number
 ;; tag: custom-number
