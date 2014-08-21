@@ -270,10 +270,10 @@
 ;; "foldl" make the procedure both more general and more compact
 (define (apply-generic op . args)
   ;; raising the arguments for specific times
-  (define (raise times arg)
+  (define (raise times argument)
     (if (= times 0)
-        arg
-        (raise (- times 1) (apply-to-two 'raise arg))))
+        argument
+        (raise (- times 1) (apply-to-two 'raise argument))))
 
   (define (drop original-arg)
     (letrec ((pushed-arg (apply-to-two 'drop original-arg)))
