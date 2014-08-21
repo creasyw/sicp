@@ -283,14 +283,19 @@
           (drop pushed-arg))))
 
   (letrec ((score-list (map get-rank args))
-           (displayln score-list)
            (highest (foldl max 0 score-list))
-           (new-args (for/list ([times (map (lambda (x) (- highest x)) score-list)]
+           (new-args (for/list ([times (map (lambda (x) (- highest x))
+                                            score-list)]
                                 [arg args])
                        (raise times arg))))
     (if (= 1 (length new-args))
         (apply-to-two op (car new-args))
-        (drop (foldl (lambda (x y) (apply-to-two op x y)) (car new-args) (cdr new-args))))))
+        (let ((result (foldl (lambda (x y) (apply-to-two op x y))
+                             (car new-args)
+                             (cdr new-args))))
+          (if (boolean? result)
+              result
+              (drop result))))))
 
 (define (apply-to-two op . args)
   (letrec ((type-tags (map type-tag args))
