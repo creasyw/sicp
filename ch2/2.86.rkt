@@ -219,8 +219,8 @@
   (put 'make-from-mag-ang 'complex
        (lambda (r a) (tag (make-from-mag-ang r a))))
   (put 'equ '(complex complex)
-       (lambda (x y) (and (= (real-part x) (real-part y))
-                          (= (imag-part x) (imag-part y)))))
+       (lambda (x y) (and (equ? (real-part x) (real-part y))
+                          (equ? (imag-part x) (imag-part y)))))
   (put '=zero? '(complex)
        (lambda (x) (and (= (real-part x) 0)
                         (= (imag-part x) 0))))
