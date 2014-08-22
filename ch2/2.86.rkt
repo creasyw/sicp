@@ -306,9 +306,12 @@
                        (raise times arg))))
     (if (= 1 (length new-args))
         (apply-to-two op (car new-args))
-        (let ((result (foldl (lambda (x y) (apply-to-two op x y))
-                             (car new-args)
-                             (cdr new-args))))
+        ;; because foldl will reverse the sequence of arguments, which
+        ;; will be incorrect for "atan", reverse the sequence beforehand.
+        (letrec ((re-args (reverse new-args))
+                 (result (foldl (lambda (x y) (apply-to-two op x y))
+                             (car re-args)
+                             (cdr re-args))))
           (if (boolean? result)
               result
               (drop result))))))
