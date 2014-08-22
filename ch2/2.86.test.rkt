@@ -16,3 +16,12 @@
 (= (+ 5/2 3/2) (add (make-rational 5 2) (make-rational 3 2)))
 (equ? (make-rational 4 3) (square-root (make-rational 16 9)))
 (= (sqrt 4/3) (square-root (make-rational 4 3)))
+
+;; testing complex package
+(equ? (make-complex-from-real-imag (make-rational 11 2) 5)
+      (add (make-complex-from-real-imag (make-rational 9 2) 2)
+           (make-complex-from-real-imag 1 3)))
+;; involving drop
+(equ? (make-complex-from-real-imag 5 5)
+      (add (make-complex-from-real-imag (make-rational 9 2) 2)
+           (make-complex-from-real-imag (make-rational 1 2) 3)))
