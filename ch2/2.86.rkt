@@ -278,7 +278,10 @@
   (define (drop original-arg)
     (letrec ((pushed-arg (apply-to-two 'drop original-arg)))
       (if (or (= 1 (get-rank original-arg))
-              (not (apply-to-two 'equ (raise (- (get-rank original-arg) (get-rank pushed-arg)) pushed-arg) original-arg)))
+              (not (equ? (raise (- (get-rank original-arg)
+                                   (get-rank pushed-arg))
+                                pushed-arg)
+                         original-arg)))
           original-arg
           (drop pushed-arg))))
 
