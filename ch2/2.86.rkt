@@ -8,6 +8,19 @@
 ;; 1. there will be another "wrap-around" for complex number.
 ;; 2. All basic operations within the original complex package have to
 ;;    be "generic", including +-*/, and sin/cos
+;; ==> Finally, it turns out there is no extra "wrapping" method
+;; involved. The fundamental idea is to make every involved operation
+;; generic, so that regardless this operation is performed outside or
+;; inside of the package, it will analyze the form/tag of the data and
+;; choose right procedure, including raise or drop if necessary, to
+;; make the operation.
+
+;; Two extra take-away points:
+;; 1. Writing API to get rid of directly calling the tagging system
+;;    makes debugging and calling more compact and readable.
+;; 2. "apply-generic" outputs either a number or a boolean (for
+;;    equ?). I made a mistake to "drop" whatever the output is and
+;;    introduced this tricky bug... Always analyze before implement.
 
 ;; import get, put
 (require "complex_num_table.rkt")
