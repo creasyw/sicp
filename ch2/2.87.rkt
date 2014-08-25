@@ -39,7 +39,7 @@
   (define (coeff term) (cadr term))
 
   ;; for add
-  (define add-poly p1 p2
+  (define (add-poly p1 p2)
     (if (same-variable? (variable p1) (variable p2))
         (make-poly (variable p1)
                    (add-terms (term-list p1)
