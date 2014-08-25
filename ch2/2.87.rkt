@@ -96,6 +96,8 @@
   (define (tag p) (attach-tag 'polynomial p))
   (put 'add '(polynomial polynomial)
        (lambda (p1 p2) (tag (add-poly p1 p2))))
+  (put 'sub '(polynomial polynomial)
+       (lambda (p1 p2) (tag (add-poly p1 (negate p2)))))
   (put 'mul '(polynomial polynomial)
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
   (put '=zero? '(polynomial)
