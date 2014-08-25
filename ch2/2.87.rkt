@@ -103,6 +103,37 @@
 (define (make-polynomial var terms)
     ((get 'make 'polynomial) var terms))
 
+;; ordinary number
+;; tag: custom-number
+(define (install-number-package)
+  (define (tag x)
+    (attach-tag 'custom-number x))
+  (put 'add '(custom-number custom-number)
+       (lambda (x y) (tag (+ x y))))
+  (put 'sub '(custom-number custom-number)
+       (lambda (x y) (tag (- x y))))
+  (put 'mul '(custom-number custom-number)
+       (lambda (x y) (tag (* x y))))
+  (put 'div '(custom-number custom-number)
+       (lambda (x y) (tag (/ x y))))
+  (put 'square-root '(custom-number)
+       (lambda (x) (tag (sqrt x))))
+  (put 'sine '(custom-number)
+       (lambda (x) (tag (sin x))))
+  (put 'cosine '(custom-number)
+       (lambda (x) (tag (cos x))))
+  (put 'atangent '(custom-number custom-number)
+       (lambda (x y) (tag (atan x y))))
+  (put 'equ '(custom-number custom-number) =)
+  (put '=zero? '(custom-number)
+       (lambda (x) (= x 0)))
+  (put 'make 'custom-number
+       (lambda (x) (tag x)))
+  'done)
+;; constructor.
+(define (make-number n)
+  ((get 'make 'custom-number) n))
+
 ;; tagging functions
 (define (type-tag datum)
   (cond ((pair? datum) (car datum))
