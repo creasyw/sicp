@@ -94,6 +94,8 @@
        (lambda (p1 p2) (tag (add-poly p1 p2))))
   (put 'mul '(polynomial polynomial)
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
+  (put '=zero? '(polynomial)
+       (lambda (p) (empty-termlist? (term-list p))))
   (put 'make 'polynomial
        (lambda (var terms) (tag (make-poly var terms))))
   'done)
