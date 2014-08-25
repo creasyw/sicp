@@ -65,6 +65,10 @@
                      (add-terms (rest-terms L1)
                                 (rest-terms L2)))))))))
 
+  ;; for subtraction
+  (define (negate p1)
+    (mul-poly p1 (make-poly (variable p1) '((0 -1)))))
+
   ;; for multiplication
   (define (mul-poly p1 p2)
     (if (same-variable? (variable p1) (variable p2))
