@@ -22,11 +22,10 @@
 
   ;; predicate
   (define (empty-termlist? term-list) (null? term-list))
-  ;; constructor
+  ;; constructor and selector for "sparse order of polynomial"
   (define (the-empty-termlist) '())
-  (define (first-term term-list) (car term-list))
   (define (make-term order coeff) (list order coeff))
-  ;; selectors
+  (define (first-term term-list) (car term-list))
   (define (rest-terms term-list) (cdr term-list))
   (define (order term) (car term))
   (define (coeff term) (cadr term))
@@ -39,7 +38,7 @@
                               (term-list p2)))
         (error "Poly not in same var -- ADD-POLY"
                (list p1 p2))))
-
+  ;; helper for add-poly
   (define (add-terms L1 L2)
     (cond ((empty-termlist? L1) L2)
           ((empty-termlist? L2) L1)
@@ -66,7 +65,7 @@
                               (term-list p2)))
         (error "Polys not in same var -- MUL-POLY"
                (list p1 p2))))
-
+  ;; helper function for mul-pily
   (define (mul-terms L1 L2)
     (if (empty-termlist? L1)
         (the-empty-termlist)
