@@ -90,3 +90,6 @@
   (put 'make 'polynomial
        (lambda (var terms) (tag (make-poly var terms))))
   'done)
+
+(define (make-polynomial var terms)
+    ((get 'make 'polynomial) var terms))
