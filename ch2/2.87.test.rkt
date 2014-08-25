@@ -13,3 +13,5 @@
 ; (polynomial x (3 4) (2 2) (1 4) (0 1))
 (=zero? (add cb cd))
 ; #t
+(mul ca cc)
+; (polynomial x (3 2) (2 23) (1 31) (0 10))
