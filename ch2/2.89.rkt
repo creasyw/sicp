@@ -169,3 +169,16 @@
 (define cc (make-polynomial 'x '(-2 -3 -1)))
 (=zero? (add ca cc))
 ; #t
+
+;; The starting point of the solution is to change as few places as
+;; possible to use the representation of "dense polynomials". But the
+;; changes are still more than I thought:
+;; 1. Most changes are in the add-terms, which is the fundamental for
+;;    both add and mul. Because the coeff are simply arranged in the
+;;    list, there is no need for recursion. As a result, the
+;;    "adjoin-term" is replaced by list manipulation.
+;; 2. Another caveat is that the resulting coeff list might have
+;;    multiple leading zeros, which is intuitively redundant (though
+;;    mathematically correct), and causes bug for "=zero?".
+;; 3. The representation of a single term is left as it is. The pair
+;;    of (order, coeff) is compact and easier to pass along the function.
