@@ -174,3 +174,7 @@
 (mul cb ca)
 ; '(polynomial x 8 12 6 3 1 0)
 (sub cb ca)
+
+(define cc (make-polynomial 'x '(-2 -3 -1)))
+(=zero? (add ca cc))
+; #t
