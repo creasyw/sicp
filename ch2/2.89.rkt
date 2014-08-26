@@ -65,7 +65,7 @@
 
   ;; for subtraction
   (define (negate p1)
-    (mul-poly p1 (make-poly (variable p1) '((0 -1)))))
+    (mul-poly p1 (make-poly (variable p1) '(-1))))
 
   ;; for multiplication
   (define (mul-poly p1 p2)
@@ -167,3 +167,4 @@
 ; '(polynomial x 4 2 4 1)
 (mul cb ca)
 ; '(polynomial x 8 12 6 3 1 0)
+(sub cb ca)
