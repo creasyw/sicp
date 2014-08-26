@@ -20,15 +20,6 @@
   (define (term-list p) (cdr p))
   (define (same-variable? v1 v2)
     (and (variable? v1) (variable? v2) (eq? v1 v2)))
-  ;; representation of terms and term lists
-  (define (adjoin-term term term-list)
-    (define (helper ord acc)
-      (if (= order (length acc))
-          (cons (coeff term) acc)
-          (helper ord (cons 0 acc))))
-    (if (=zero? (coeff term))
-        term-list
-        (helper (order term) term-list)))
 
   ;; predicate
   (define (empty-termlist? term-list) (null? term-list))
