@@ -84,11 +84,8 @@
   (define (mul-term-by-all-terms t1 L)
     (if (empty-termlist? L)
         (the-empty-termlist)
-        (let ((t2 (first-term L)))
-          (adjoin-term
-           (make-term (+ (order t1) (order t2))
-                      (mul (coeff t1) (coeff t2)))
-           (mul-term-by-all-terms t1 (rest-terms L))))))
+        (let ((newlist (append L (build-list (order t1) (lambda (x) 0)))))
+          (map (lambda (x) (* x (coeff t1))) newlist))))
 
   ;; interface to rest of the system
   (define (tag p) (attach-tag 'polynomial p))
