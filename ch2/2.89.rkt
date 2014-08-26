@@ -50,22 +50,18 @@
                (list p1 p2))))
   ;; helper for add-poly
   (define (add-terms L1 L2)
+    (define (list-add lst1 lst2)
+      (for/list ([l1 lst1] [l2 lst2])
+        (+ l1 l2)))
     (cond ((empty-termlist? L1) L2)
           ((empty-termlist? L2) L1)
-          (else
-           (let ((t1 (first-term L1)) (t2 (first-term L2)))
-             (cond ((> (order t1) (order t2))
-                    (adjoin-term
-                     t1 (add-terms (rest-terms L1) L2)))
-                   ((< (order t1) (order t2))
-                    (adjoin-term
-                     t2 (add-terms L1 (rest-terms L2))))
-                   (else
-                    (adjoin-term
-                     (make-term (order t1)
-                                (add (coeff t1) (coeff t2)))
-                     (add-terms (rest-terms L1)
-                                (rest-terms L2)))))))))
+          (#t (letrec ((len1 (length L1))
+                       (len2 (length L2)))
+                (cond ((> len1 len2) (append (take L1 (- len1 len2))
+                                             (list-add (drop L1 (- len1 len2)) L2)))
+                      ((< len1 len2) (append (take L2 (- len2 len1))
+                                             (list-add L1 (drop L2 (- len2 len1)))))
+                      (#t (list-add L1 L2)))))))
 
   ;; for subtraction
   (define (negate p1)
