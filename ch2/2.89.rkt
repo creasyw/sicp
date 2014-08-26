@@ -164,3 +164,6 @@
 (define ca (make-polynomial 'x '(2 3 1)))
 (define cb (make-polynomial 'x '(4 0 1 0)))
 (add ca cb)
+; '(polynomial x 4 2 4 1)
+(mul cb ca)
+; '(polynomial x 8 12 6 3 1 0)
