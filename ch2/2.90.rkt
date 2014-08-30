@@ -196,12 +196,14 @@
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
   (put '=zero? '(dense)
        (lambda (p) (empty-termlist? (term-list p))))
-  (put 'make 'polynomial
+  (put 'make 'dense
        (lambda (var terms) (tag (make-poly var terms))))
   'done)
 
 (define (make-polynomial var terms)
-    ((get 'make 'polynomial) var terms))
+  (if (list? (car terms))
+      ((get 'make 'sparse) var terms)
+      ((get 'make 'dense) var terms)))
 
 ;; ordinary number
 ;; tag: custom-number
