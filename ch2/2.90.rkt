@@ -1,4 +1,9 @@
 #lang racket
+;; This question is similar with/different from the two
+;; representations of complex numbers. It's necessary to use two
+;; "make-complex" functions, but not for poly. In this file, the
+;; "make-poly" is still one unified function, and it will decide which
+;; representation the input is and choose corresponding package.
 
 ;; import get, put
 (require "complex_num_table.rkt")
