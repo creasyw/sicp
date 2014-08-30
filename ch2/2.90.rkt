@@ -258,3 +258,10 @@
           (apply proc (map contents args))
           (error "No method for these types"
                  (list op type-tags))))))
+
+;; for testing
+(install-sparse-package)
+(install-dense-package)
+(install-number-package)
+(make-polynomial 'x '(2 3 1))
+(make-polynomial 'y '((2 2) (1 3) (0 1)))
