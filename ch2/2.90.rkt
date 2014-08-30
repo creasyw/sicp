@@ -252,12 +252,17 @@
 
 ;; interface for the package
 (define (apply-generic op . args)
-  (let ((type-tags (map type-tag args)))
-    (let ((proc (get op type-tags)))
-      (if proc
-          (apply proc (map contents args))
-          (error "No method for these types"
-                 (list op type-tags))))))
+  (letrec ((type-tags (map type-tag args))
+           (new-args (for/list ([type type-tags]
+                                [arg args])
+                       (if (or (eq? type 'custom-number) (eq? type (car type-tags)))
+                           arg
+                           ((get 'transform type) arg))))
+           (new-type-tags (build-list (length type-tags) (lambda (x) (car type-tags))))
+           (proc (get op new-type-tags)))
+    (if proc
+        (apply proc (map contents new-args))
+        (error "No method for these types" (list op type-tags)))))
 
 ;; for testing
 (install-sparse-package)
