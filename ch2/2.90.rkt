@@ -282,3 +282,18 @@
 (install-number-package)
 (make-polynomial 'x '(2 3 1))
 (make-polynomial 'y '((2 2) (1 3) (0 1)))
+
+(define ca (make-polynomial 'x '((2 2) (1 3) (0 1))))
+(define cb (make-polynomial 'x '((3 4) (1 1))))
+(define cc (make-polynomial 'x '((1 1) (0 10))))
+(define cd (make-polynomial 'x '(4 0 1 0)))
+
+
+(displayln "\nAdding two sparse together:")
+(add ca cb)
+; '(sparse x (3 4) (2 2) (1 4) (0 1))
+(displayln "\nAdding a sparse with dense:")
+(add cd ca)
+;(add cd cd)
+;(mul ca cc)
+; '(sparse x (3 2) (2 23) (1 31) (0 10))
