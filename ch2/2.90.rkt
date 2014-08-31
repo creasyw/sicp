@@ -97,6 +97,14 @@
                       (mul (coeff t1) (coeff t2)))
            (mul-term-by-all-terms t1 (rest-terms L))))))
 
+  (define (transform-to-dense var terms)
+    (define (to-dense acc digits lst)
+      (cond ((< digits 0) (reverse acc))
+            ((= 0 (length lst)) (to-dense (cons 0 acc) (- digits 1) lst))
+            ((= digits (car (car lst))) (to-dense (cons (cadr (car lst)) acc) (- digits 1) (cdr lst)))
+            (#t (error "The terms are wrongly given" lst))))
+    (attach-tag 'dense (cons var (to-dense '() (car (car terms)) terms))))
+
   ;; interface to rest of the system
   (define (tag p) (attach-tag 'sparse p))
   (put 'add '(sparse sparse)
@@ -109,6 +117,10 @@
        (lambda (p) (empty-termlist? (term-list p))))
   (put 'make 'sparse
        (lambda (var terms) (tag (make-poly var terms))))
+
+  (put 'transform 'sparse
+       (lambda (p) (transform-to-dense (variable p) (term-list p))))
+
   'done)
 
 ;; for dense representation
