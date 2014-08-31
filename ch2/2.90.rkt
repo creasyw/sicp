@@ -269,7 +269,7 @@
                                 [arg args])
                        (if (or (eq? type 'custom-number) (eq? type (car type-tags)))
                            arg
-                           ((get 'transform type) arg))))
+                           ((get 'transform type) (contents arg)))))
            (new-type-tags (build-list (length type-tags) (lambda (x) (car type-tags))))
            (proc (get op new-type-tags)))
     (if proc
