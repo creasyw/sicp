@@ -223,6 +223,10 @@
        (lambda (p) (empty-termlist? (term-list p))))
   (put 'make 'dense
        (lambda (var terms) (tag (make-poly var terms))))
+
+  (put 'transform 'dense
+       (lambda (p) (transform-to-sparse (variable p) (term-list p))))
+
   'done)
 
 (define (make-polynomial var terms)
