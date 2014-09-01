@@ -5,6 +5,12 @@
 ;; "make-poly" is still one unified function, and it will decide which
 ;; representation the input is and choose corresponding package.
 
+;; For operations upon two different representations, it's reasonable
+;; to use the shorter one, but in the code below, I use a simplified
+;; version which will unify all representations to the 1st
+;; polynomial. Accordingly, the method "transform" is implemented in
+;; both packages.
+
 ;; import get, put
 (require "complex_num_table.rkt")
 
