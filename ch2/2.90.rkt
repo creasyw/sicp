@@ -204,6 +204,13 @@
         (let ((newlist (append L (build-list (order t1) (lambda (x) 0)))))
           (map (lambda (x) (* x (coeff t1))) newlist))))
 
+  (define (transform-to-sparse var terms)
+    (define (to-sparse acc lst)
+      (cond ((= 0 (length lst)) acc)
+            ((= 0 (car lst)) (to-sparse acc (cdr lst)))
+            (#t (to-sparse (append acc (list (list (- (length lst) 1) (car lst)))) (cdr lst)))))
+    (attach-tag 'sparse (cons var (to-sparse '() terms))))
+
   ;; interface to rest of the system
   (define (tag p) (attach-tag 'dense p))
   (put 'add '(dense dense)
