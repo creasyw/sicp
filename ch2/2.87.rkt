@@ -128,8 +128,13 @@
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
   (put '=zero? '(polynomial)
        (lambda (p) (empty-termlist? (term-list p))))
+  ;; because there are two polynomials coming out of the div-terms, it
+  ;; has to attach variable and 'polynomial twice in both div-poly and here.
   (put 'div '(polynomial polynomial)
-       (lambda (p1 p2) (tag (div-poly p1 p2))))
+       (lambda (p1 p2) (letrec ((two-poly (div-poly p1 p2))
+                                    (quo-poly (car two-poly))
+                                    (rem-poly (cadr two-poly)))
+                             (list (tag quo-poly) (tag rem-poly)))))
   (put 'make 'polynomial
        (lambda (var terms) (tag (make-poly var terms))))
   'done)
