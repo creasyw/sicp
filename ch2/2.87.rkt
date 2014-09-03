@@ -107,8 +107,8 @@
                  (t2 (first-term L2)))
           (if (> (order t2) (order t1))
               (list (the-empty-termlist) L1)
-              (letrec ((new-c (/ (coeff t1) (coeff t2)))
-                       (new-o (- (order t1) (order t2)))
+              (letrec ((new-c (div (coeff t1) (coeff t2)))
+                       (new-o (sub (order t1) (order t2)))
                        (rest-of-result
                         (add-terms L1
                                    (mul-terms '((0 -1))
