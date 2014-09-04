@@ -1,4 +1,6 @@
 #lang racket
+;; for simplicity, the "major" variable symbol of the final result
+;; will be the variable of the 1st poly
 
 ;; import get, put
 (require "complex_num_table.rkt")
