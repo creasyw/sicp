@@ -12,6 +12,7 @@
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 (define (=zero? x) (apply-generic '=zero? x))
+(define (polynomial? x) (apply-generic 'polynomial? x))
 
 (define (install-polynomial-package)
   ;; internal procedures
@@ -31,6 +32,7 @@
 
   ;; predicate
   (define (empty-termlist? term-list) (null? term-list))
+  (define (poly? p) (and (list? p) (variable? (variable p))))
   ;; constructor and selector for "sparse order of polynomial"
   (define (the-empty-termlist) '())
   (define (make-term order coeff) (list order coeff))
@@ -130,6 +132,8 @@
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
   (put '=zero? '(polynomial)
        (lambda (p) (empty-termlist? (term-list p))))
+  (put 'polynomial? '(polynomial)
+       (lambda (p) (poly? p)))
   ;; because there are two polynomials coming out of the div-terms, it
   ;; has to attach variable and 'polynomial twice in both div-poly and here.
   (put 'div '(polynomial polynomial)
@@ -168,6 +172,7 @@
   (put 'equ '(custom-number custom-number) =)
   (put '=zero? '(custom-number)
        (lambda (x) (= x 0)))
+  (put 'polynomial? '(custom-number) (lambda (x) #f))
   (put 'make 'custom-number
        (lambda (x) (tag x)))
   'done)
