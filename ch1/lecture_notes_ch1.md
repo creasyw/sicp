@@ -93,5 +93,11 @@ The rights and privileges of the 1st-class citizens:
 - to be returned as values of procedures
 - to be incorporated into data structures
 
+> Compound procedures are a crucial abstraction mechanism, because they permit us to express general methods of computing as explicit elements in our programming language. 
+>
+>As programmers, we should be alert to opportunities to identify the underlying abstractions in our programs and to build upon them and generalize them to create more powerful abstractions.... The significance of higher-order procedures is that they enable us to represent these abstractions explicitly as elements in our programming language, so that they can be handled just like other computational elements.
+>
+>Lisp awards procedures full first-class status. This poses challenges for efficient implementation, but the resulting gain in expressive power is enormous.
+
 _Quote of this lecture_ -- "'[Wishful thinking](https://en.wikipedia.org/wiki/Wishful_thinking)' is essential to good engineering, and is certainly also essential to good computer science."
 
