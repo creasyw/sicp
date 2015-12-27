@@ -56,4 +56,4 @@ The analogy of "**[Tower of Hanoi](https://en.wikipedia.org/wiki/Tower_of_Hanoi)
           (Move Last-one From To Spare)
           (Move (- N 1) Spare To From))))
 ```
-It has an _almost_ exactly tree structure to solve the puzzle as what Fibonacci does. It takes _exponential_ time to solve it.
+It has an _almost_ exactly tree structure to solve the puzzle as what Fibonacci does, which takes _exponential_ time and _linear_ space.
