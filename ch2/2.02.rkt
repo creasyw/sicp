@@ -2,9 +2,9 @@
 
 (define (make-segment start-point end-point)
   (cons start-point end-point))
-(define (start-segment seg)
+(define (segment-start seg)
   (car seg))
-(define (end-segment seg)
+(define (segment-end seg)
   (cdr seg))
 
 (define (make-point x y)
@@ -18,8 +18,8 @@
   (lambda (x y) (/ (+ x y) 2)))
 
 (define (midpoint-segment seg)
-  (let ((start (start-segment seg))
-        (end (end-segment seg)))
+  (let ((start (segment-start seg))
+        (end (segment-end seg)))
     (make-point (average (x-point start) (x-point end))
                 (average (y-point start) (y-point end)))))
 
