@@ -9,9 +9,9 @@
 
 (define (make-point x y)
   (cons x y))
-(define (x-point p)
+(define (x-coordinate p)
   (car p))
-(define (y-point p)
+(define (y-coordinate p)
   (cdr p))
 
 (define average
