@@ -20,12 +20,33 @@
 (define (midpoint-segment seg)
   (let ((start (segment-start seg))
         (end (segment-end seg)))
-    (make-point (average (x-point start) (x-point end))
-                (average (y-point start) (y-point end)))))
+    (make-point (average (x-coordinate start) (x-coordinate end))
+                (average (y-coordinate start) (y-coordinate end)))))
 
-(define (print-point p)
-  (display "(")
-  (display (x-point p))
-  (display ",")
-  (display (y-point p))
-  (display ")"))
+;; constructor -- use two points to define a rectangle
+(define make-rectangle
+  (lambda (point-x point-y) (cons point-x point-y)))
+;; selector
+(define (get-vertex1 rectangle) (car rectangle))
+(define (get-vertex2 rectangle) (cdr rectangle))
+(define (get-width rectangle)
+  (abs (- (x-coordinate (get-vertex1 rectangle))
+          (x-coordinate (get-vertex2 rectangle)))))
+(define (get-height rectangle)
+  (abs (- (y-coordinate (get-vertex1 rectangle))
+          (y-coordinate (get-vertex2 rectangle)))))
+
+(define (get-preimeter rectangle)
+  (+ (* 2 (get-width rectangle))
+     (* 2 (get-height rectangle))))
+
+(define (get-area rectangle)
+  (* (get-width rectangle) (get-height rectangle)))
+
+;; test
+(define a (make-point 1 2))
+(define b (make-point 5 5))
+(define rec (make-rectangle a b))
+
+(eq? (get-preimeter rec) 14)
+(eq? (get-area rec) 12)
