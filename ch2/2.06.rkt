@@ -5,11 +5,18 @@
 ;; or another procedure
 (define zero (lambda (f) (lambda (x) x)))
 
-;; "Add-1" means for the original procedure `(f x)', it would apply
-;; input procedure `n' to the `f' **once**, and then apply it to the
-;; input parameter `x' (either a number or another procedure) to
-;; generate the new input parameter, and use that to feed the
-;; procedure `f'. Note that, the counterpart of `add-1' is not `zero',
-;; but would be `add-0'.
+;; "Add-1" means "successor of n", that is $f^{n+1}(x) = f(f^n(x))$
+;; https://en.wikipedia.org/wiki/Church_encoding#Computation_with_Church_numerals
 (define (add-1 n)
   (lambda (f) (lambda (x) (f ((n f) x)))))
+
+(define one
+  (lambda (f) (lambda (x) (f x))))
+
+(define two
+  (lambda (f) (lambda (x) (f (f x)))))
+
+;; $f^{m+n}(x) = f^m(f^n(x))$
+(define (add m n)
+  (lambda (f) (lambda (x)
+                ((m f) ((n f) x)))))
