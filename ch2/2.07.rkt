@@ -1,14 +1,26 @@
 #lang racket
 
+(provide (all-defined-out))
+
 (define (make-interval a b) (cons a b))
+
+;; round the number 'x' after 'precison' decimal places
+(define (round-off x precision)
+  (letrec ((base (expt 10 precision)))
+    (/ (round (* x base)) base)))
+
+(define tolerance 2)
 
 ;; 2.07
 (define (lower-bound x) (car x))
 (define (upper-bound x) (cdr x))
 
+(define add
+  (lambda (x y) (round-off (+ x y) tolerance)))
+
 (define (add-interval x y)
-  (make-interval (+ (lower-bound x) (lower-bound y))
-                 (+ (upper-bound x) (upper-bound y))))
+  (make-interval (add (lower-bound x) (lower-bound y))
+                 (add (upper-bound x) (upper-bound y))))
 
 (define (mul-interval x y)
   (let ((p1 (* (lower-bound x) (lower-bound y)))
@@ -27,6 +39,9 @@
                                    (/ 1.0 (lower-bound y))))))
 
 ;; 2.08
+(define sub
+  (lambda (x y) (round-off (- x y) tolerance)))
+
 (define (sub-interval x y)
-  (make-interval (- (upper-bound x) (lower-bound y))
-                 (- (lower-bound x) (upper-bound y))))
+  (make-interval (sub (upper-bound x) (lower-bound y))
+                 (sub (lower-bound x) (upper-bound y))))
