@@ -1,13 +1,5 @@
 #lang racket
 
-(provide make-interval)
-(provide add-interval)
-(provide mul-interval)
-(provide div-interval)
-(provide sub-interval)
-(provide upper-bound)
-(provide lower-bound)
-
 (define (make-interval a b) (cons a b))
 
 ;; 2.07
@@ -30,7 +22,7 @@
   (if (or (= 0 (upper-bound y))
           (= 0 (lower-bound y)))
       (displayln "y might not be divisible")
-      (mul-interval x 
+      (mul-interval x
                     (make-interval (/ 1.0 (upper-bound y))
                                    (/ 1.0 (lower-bound y))))))
 
