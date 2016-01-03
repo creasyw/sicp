@@ -24,8 +24,7 @@
                 (average (y-coordinate start) (y-coordinate end)))))
 
 ;; constructor -- use two points to define a rectangle
-(define make-rectangle
-  (lambda (point-x point-y) (cons point-x point-y)))
+(define make-rectangle cons)
 ;; selector
 (define (get-vertex1 rectangle) (car rectangle))
 (define (get-vertex2 rectangle) (cdr rectangle))
