@@ -31,3 +31,24 @@ The detailed implementation of the "pair" `cons` is the first time in this book 
 - It blurs the boundary between data and procedure. Procedure here is concrete entity -- it is an object.
 
 _Quote of the lecture_: "the naming at programming is the same as the naming at sorcery -- if you name it, you own it".
+
+## Lecture 5
+
+
+`for-each` only cares about doing something to each element of the list but not really cares about building a new list and/or storing the generated items. On the contrary, `map` is to generate a new list _by applying the procedure to each element in the original list_.
+
+The methodology of data abstraction is to isolate the way that the data is used from the way that the data is represented. "The means of combination" in Lisp is **closed** -- it can be `cons` of `cons`, as well as `list` of `list`. The "**closure**" property would incorporate complexity really fast.
+
+> Procedural representations of data will play a central role in our programming repertoire and this style of programming is often called _message passing_.
+
+This "_procedure_" is important for the _closure_ property. Take the drawing picture at 2.4 as an example, the `picture` procedure does not care if the picture is a point, segment, or a real picture. It only cares that there is something that will be drawn to a coordinate. The _means of combinations_ are procedures, so they are inherently closed.
+
+There are sequence of layers of language --
+
+- Langage of Schemes of Combinations
+- Lanugage of Geometric Positions
+- Lanugage of Primitive Pictures
+
+In each level, the element that is defined is to talk about everything in this linguistic level, by using the items defined in the lower level. These levels at linguistics is much more robust than building a system with _tree_structure_, in which each node goes down to specific leaf node to do some specific job.
+
+_Quote of the lecture_: "Embeded something in the language is desireable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language." 
