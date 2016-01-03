@@ -1,5 +1,7 @@
 #lang racket
 
+;; assume the pair of numbers are non-negative, so the recursive way
+;; of finding car or cdr could work
 (define (cons2 a b)
   (lambda (selector)
     (selector (* (expt 2 a) (expt 3 b)))))
