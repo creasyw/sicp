@@ -5,6 +5,11 @@
 (define (mul-interval2 x y)
   (cond ((> (upper-bound y) (upper-bound x))
          (mul-interval2 y x))
+        ;; there are four cases for multiplication of two upper
+        ;; bounds, and then consider lower bounds, the overall cases
+        ;; are 2*2 + 2*1 + 2*1 + 1*1 = 9, two of which cases need more
+        ;; than two multiplications. The first condition would cut the
+        ;; edges half.
         ((and (>= (upper-bound x) 0) (>= (upper-bound y) 0))
          (cond ((and (>= (lower-bound x) 0) (>= (lower-bound y) 0))
                 (make-interval (mult (lower-bound x) (lower-bound y))
