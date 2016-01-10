@@ -9,6 +9,7 @@
   (letrec ((base (expt 10 precision)))
     (/ (round (* x base)) base)))
 
+;; confine the precision to be 0.01
 (define tolerance 2)
 
 ;; 2.07
