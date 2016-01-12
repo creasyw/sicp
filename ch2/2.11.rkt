@@ -1,6 +1,7 @@
 #lang racket
 
 (require "2.07.rkt")
+(provide (all-defined-out))
 
 (define (mul-interval2 x y)
   (cond ((> (upper-bound y) (upper-bound x))
