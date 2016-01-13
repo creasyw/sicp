@@ -10,11 +10,11 @@
 
 ;; It is REALLY painful to do floating point calculation...
 (define (center i)
-  (round-off (/ (+ (lower-bound i) (upper-bound i)) 2) tolerance))
+  (div (+ (lower-bound i) (upper-bound i)) 2))
 
 (define (percent i)
   (letrec ((c (center i)))
-    (round-off (/ (- (upper-bound i) c) c) tolerance)))
+    (div (- (upper-bound i) c) c)))
 
 
 ;; test
