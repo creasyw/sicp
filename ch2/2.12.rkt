@@ -5,12 +5,14 @@
 ;; import eq-interval?
 (require "2.11.rkt")
 
+(provide (all-defined-out))
+
 (define (make-center-percent c r)
-  (make-interval (* c (- 1 r)) (* c (+ 1 r))))
+  (make-interval (mult c (- 1 r)) (mult c (+ 1 r))))
 
 ;; It is REALLY painful to do floating point calculation...
 (define (center i)
-  (div (+ (lower-bound i) (upper-bound i)) 2))
+  (div (+ (lower-bound i) (upper-bound i)) 2.0))
 
 (define (percent i)
   (letrec ((c (center i)))
