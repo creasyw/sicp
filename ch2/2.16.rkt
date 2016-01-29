@@ -96,4 +96,3 @@
 (define (percent i)
   (letrec ((c (center i)))
     (div (- (upper-bound i) c) c)))
-

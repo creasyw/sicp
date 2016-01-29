@@ -39,6 +39,16 @@ _Quote of the lecture_: "the naming at programming is the same as the naming at 
 
 The methodology of data abstraction is to isolate the way that the data is used from the way that the data is represented. "The means of combination" in Lisp is **closed** -- it can be `cons` of `cons`, as well as `list` of `list`. The "**closure**" property would incorporate complexity really fast.
 
+The ability to create pairs whose elements are pairs is the essence of
+list structure's importance as a representational tool. It is being
+referred as the "_closure property_" of cons. In general, an operation
+for combining data objects satisfies the closure property if the
+results of combining things with that operation can themselves be
+combined using the same operation.6 Closure is the key to power in any
+means of combination because it permits us to create hierarchical
+structures -- structures made up of parts, which themselves are made
+up of parts, and so on.
+
 > Procedural representations of data will play a central role in our programming repertoire and this style of programming is often called _message passing_.
 
 This "_procedure_" is important for the _closure_ property. Take the drawing picture at 2.4 as an example, the `picture` procedure does not care if the picture is a point, segment, or a real picture. It only cares that there is something that will be drawn to a coordinate. The _means of combinations_ are procedures, so they are inherently closed.
