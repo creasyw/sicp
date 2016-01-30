@@ -53,6 +53,14 @@ up of parts, and so on.
 
 This "_procedure_" is important for the _closure_ property. Take the drawing picture at 2.4 as an example, the `picture` procedure does not care if the picture is a point, segment, or a real picture. It only cares that there is something that will be drawn to a coordinate. The _means of combinations_ are procedures, so they are inherently closed.
 
+_map_ helps establish an abstraction barrier that isolates the
+implementation of procedures that transform lists from the details of
+how the elements of the list are extracted and combined. Like the
+barriers shown in figure 2.1, this abstraction gives us the
+flexibility to change the low-level details of how sequences are
+implemented, while preserving the conceptual framework of operations
+that transform sequences to sequences.
+
 There are sequence of layers of language --
 
 - Langage of Schemes of Combinations
