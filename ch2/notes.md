@@ -70,3 +70,11 @@ There are sequence of layers of language --
 In each level, the element that is defined is to talk about everything in this linguistic level, by using the items defined in the lower level. These levels at linguistics is much more robust than building a system with _tree_structure_, in which each node goes down to specific leaf node to do some specific job.
 
 _Quote of the lecture_: "Embeded something in the language is desireable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language." 
+
+
+## Lecture 6
+
+It is reasonable to define problem by splitting it into multiple predicates (procedure). It makes the syntax easy to understand, and serves more of an interface for human understanding. Meanwhile, designing a program in a top-down level has a similar effect as TDD -- the lower-level representations are defined by interface first and then the implementation. This approach also set the abstraction barriers which makes the higher-level rules (derivatives in this lecture) independent from the implemnetation.
+
+Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
+
