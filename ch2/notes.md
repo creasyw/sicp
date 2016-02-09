@@ -61,6 +61,9 @@ flexibility to change the low-level details of how sequences are
 implemented, while preserving the conceptual framework of operations
 that transform sequences to sequences.
 
+> Recursion is a natural tool for dealing with tree structures, since we can often reduce operations on trees to operations on their branches, which reduce in turn to operations on the branches of the branches, and so on, until we reach the leaves of the tree.
+
+
 There are sequence of layers of language --
 
 - Langage of Schemes of Combinations
