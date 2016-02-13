@@ -53,16 +53,31 @@ up of parts, and so on.
 
 This "_procedure_" is important for the _closure_ property. Take the drawing picture at 2.4 as an example, the `picture` procedure does not care if the picture is a point, segment, or a real picture. It only cares that there is something that will be drawn to a coordinate. The _means of combinations_ are procedures, so they are inherently closed.
 
-_map_ helps establish an abstraction barrier that isolates the
-implementation of procedures that transform lists from the details of
-how the elements of the list are extracted and combined. Like the
-barriers shown in figure 2.1, this abstraction gives us the
-flexibility to change the low-level details of how sequences are
-implemented, while preserving the conceptual framework of operations
-that transform sequences to sequences.
+> _map_ helps establish an abstraction barrier that isolates the implementation of procedures that transform lists from the details of how the elements of the list are extracted and combined. This abstraction gives us the flexibility to change the low-level details of how sequences are implemented, while preserving the _conceptual_ framework of operations that transform sequences to sequences.
+... It is able to be equally powerful to process the tree structure once the `map` is defined as an alias and being recursively called in the anonymost function within itself.
+
 
 > Recursion is a natural tool for dealing with tree structures, since we can often reduce operations on trees to operations on their branches, which reduce in turn to operations on the branches of the branches, and so on, until we reach the leaves of the tree.
 
+It also reveals a merit of functional programming. It is more about "procedure", which is the definition of what something is, and can be either _function_ or _data structure_. It is independent from the imperative programming, which is more of defining how something works. The former approach is easier to set abstraction barriers so that the program can have clear layers to expose complexity that is only relevant to the concepts in the same layer.
+
+> The key to organizing programs so as to more clearly reflect the signal-flow structure is to concentrate on the "signals" that flow from one stage in the process to the next. If we represent these signals as lists, then we can use list operations to implement the processing at each of the stages.
+>
+> The value of expressing programs as sequence operations is that this helps us make program designs that are modular, that is, designs that are constructed by combining relatively independent pieces. We can encourage modular design by providing a library of standard components together with a conventional interface for connecting the components in flexible ways.
+>
+> Modular construction is a powerful strategy for controlling complexity in engineering design. In real signal-processing applications, for example, designers regularly build systems by cascading elements selected from standardized families of filters and transducers. Similarly, sequence operations provide a library of standard program elements that we can mix and match. 
+>
+> It is important to know how data abstraction permits us to design programs without becoming enmeshed in the details of data representations, and how abstraction preserves for us the flexibility to experiment with alternative representations. Another powerful design principle for working with data structures is the use of conventional interfaces.
+
+....
+
+> The key to organizing programs so as to more clearly reflect the signal-flow structure is to concentrate on the ``signals'' that flow from one stage in the process to the next. If we represent these signals as lists, then we can use list operations to implement the processing at each of the stages.
+>
+> The value of expressing programs as sequence operations is that this helps us make program designs that are modular, that is, designs that are constructed by combining relatively independent pieces. We can encourage modular design by providing a library of standard components together with a conventional interface for connecting the components in flexible ways.
+>
+> Modular construction is a powerful strategy for controlling complexity in engineering design. In real signal-processing applications, for example, designers regularly build systems by cascading elements selected from standardized families of filters and transducers. Similarly, sequence operations provide a library of standard program elements that we can mix and match. _We can also formulate conventional data-processing applications in terms of sequence operations_.
+>
+> Sequences, implemented here as lists, serve as a conventional interface that permits us to combine processing modules. Additionally, when we uniformly represent structures as sequences, **we have localized the data-structure dependencies in our programs to a small number of sequence operations. By changing these, we can experiment with alternative representations of sequences, while leaving the overall design of our programs intact**.
 
 There are sequence of layers of language --
 
@@ -81,3 +96,9 @@ It is reasonable to define problem by splitting it into multiple predicates (pro
 
 Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
 
+
+## _Side note for racket##
+
+- `(cons 1 2)` returns a pair, and `(cons 1 '(2))` returns a list `'(1 2)`. The counterpart is that the `cdr` of a list is a **list** without the original leading element, while the `cdr` of a pair is the 2nd **element** of the pair.
+- There are quite a few interesting _start_ functions for pair and list, such as `append*`. Its usage is `(append* lst ... lsts)`, and is equal to `(apply append lst ... lsts)`.
+- There is not a `flatmap` as the example of "nested mappings" in the SICP, but there is a `append-map`, which is self-explanatory and equavelant to `(append* (map ...))`.
