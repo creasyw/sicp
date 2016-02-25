@@ -37,11 +37,11 @@
                       (enumerate-interval 0 n)))))
 
 ;; the basic difference between these two sets of functions is that
-;; the latter set make the enumeration of the data structure in the
-;; innermost place while the former keep it in the surface. That is
+;; the latter set makes the enumeration of the data structure in the
+;; innermost place while the former keeps it in the surface. That is
 ;; also the (only) difference between these two functions.
 ;;
 ;; That is, if the "wishful thinking" is used here and the data
 ;; eventually fed into the program is a list regardless of the
 ;; original structure, we can use the blocks as if we're processing the
-;; series of signals (lists of data)! Refer Lecture 5 for more info.
+;; series of signals (lists of data)! Refer to Lecture 5 for more info.
