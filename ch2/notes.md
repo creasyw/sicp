@@ -54,7 +54,7 @@ up of parts, and so on.
 This "_procedure_" is important for the _closure_ property. Take the drawing picture at 2.4 as an example, the `picture` procedure does not care if the picture is a point, segment, or a real picture. It only cares that there is something that will be drawn to a coordinate. The _means of combinations_ are procedures, so they are inherently closed.
 
 > _map_ helps establish an abstraction barrier that isolates the implementation of procedures that transform lists from the details of how the elements of the list are extracted and combined. This abstraction gives us the flexibility to change the low-level details of how sequences are implemented, while preserving the _conceptual_ framework of operations that transform sequences to sequences.
-... It is able to be equally powerful to process the tree structure once the `map` is defined as an alias and being recursively called in the anonymost function within itself.
+... It is able to be equally powerful to process the tree structure once the `map` is defined as an alias and being recursively called in the anonymous function within itself.
 
 
 > Recursion is a natural tool for dealing with tree structures, since we can often reduce operations on trees to operations on their branches, which reduce in turn to operations on the branches of the branches, and so on, until we reach the leaves of the tree.
@@ -77,22 +77,26 @@ It also reveals a merit of functional programming. It is more about "procedure",
 >
 > Modular construction is a powerful strategy for controlling complexity in engineering design. In real signal-processing applications, for example, designers regularly build systems by cascading elements selected from standardized families of filters and transducers. Similarly, sequence operations provide a library of standard program elements that we can mix and match. _We can also formulate conventional data-processing applications in terms of sequence operations_.
 >
-> Sequences, implemented here as lists, serve as a conventional interface that permits us to combine processing modules. Additionally, when we uniformly represent structures as sequences, **we have localized the data-structure dependencies in our programs to a small number of sequence operations. By changing these, we can experiment with alternative representations of sequences, while leaving the overall design of our programs intact**.
+> Sequences, implemented here as lists, serve as a conventional interface that permits us to combine processing modules. Additionally, _when we uniformly represent structures as sequences, **we have localized the data-structure dependencies in our programs to a small number of sequence operations**_. By changing these, we can **experiment with alternative representations of sequences, while leaving the overall design of our programs intact**.
+
+Though data and procedures have a much obscure line in Lisp, this thought is actually useful to separate them apart. Usually, there is little control about the data that the program is receiving, as well as the format of data that would finally be presented. Both of them are API towards others (programs, services, or human beings). But it is also relatively well-defined about the operations.
+
+_nit thing from racket_: The counterpart of `flat-map` at racket is `append-map`, which is to combine the mapping and accumulating with append. Actually, racket does a better job of naming. And even better, there is `append*` apart from `append`. The former operator `(append* lst ... lsts)` is equal to `(apply append lst ... lsts)`.
 
 There are sequence of layers of language --
 
-- Langage of Schemes of Combinations
-- Lanugage of Geometric Positions
-- Lanugage of Primitive Pictures
+- Language of Schemes of Combinations
+- Language of Geometric Positions
+- Language of Primitive Pictures
 
 In each level, the element that is defined is to talk about everything in this linguistic level, by using the items defined in the lower level. These levels at linguistics is much more robust than building a system with _tree_structure_, in which each node goes down to specific leaf node to do some specific job.
 
-_Quote of the lecture_: "Embeded something in the language is desireable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language." 
+_Quote of the lecture_: "Embedded something in the language is desirable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language." 
 
 
 ## Lecture 6
 
-It is reasonable to define problem by splitting it into multiple predicates (procedure). It makes the syntax easy to understand, and serves more of an interface for human understanding. Meanwhile, designing a program in a top-down level has a similar effect as TDD -- the lower-level representations are defined by interface first and then the implementation. This approach also set the abstraction barriers which makes the higher-level rules (derivatives in this lecture) independent from the implemnetation.
+It is reasonable to define problem by splitting it into multiple predicates (procedure). It makes the syntax easy to understand, and serves more of an interface for human understanding. Meanwhile, designing a program in a top-down level has a similar effect as TDD -- the lower-level representations are defined by interface first and then the implementation. This approach also set the abstraction barriers which makes the higher-level rules (derivatives in this lecture) independent from the implementation.
 
 Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
 
