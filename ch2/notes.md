@@ -1,13 +1,13 @@
 ## Lecture 4
 
 > A procedure can be regarded as a pattern for the local evolution of a process. Higher-order procedures enhance the power of our language by enabling us to manipulate, and thereby to reason in terms of, general methods of computation. **This is much of the essence of programming**. A procedure used as an element in creating a more complex procedure could be regarded not only as a collection of particular operations but also as a procedural abstraction.
-> 
+>
 > Another key aspect of any programming language: the means it provides for building abstractions by combining data objects to form compound data. For the same reasons that we want compound procedures: to elevate the conceptual level at which we can design our programs, to increase the modularity of our designs, and to enhance the expressive power of our language. Just as the ability to define procedures enables us to deal with processes at a higher conceptual level than that of the primitive operations of the language, the ability to construct compound data objects enables us to deal with data at a higher conceptual level than that of the primitive data objects of the language.
-> 
+>
 > The main issue to be addressed is that of abstraction as a technique for coping with complexity, and data abstraction enables us to erect suitable abstraction barriers between different parts of a program. One key idea in dealing with compound data is the notion of closure -- that the glue we use for combining data objects should allow us to combine not only primitive data objects, but compound data objects as well. Another key idea is that compound data objects can serve as conventional interfaces for combining program modules in mix-and-match ways.
-> 
+>
 > Just as a given numerical function can be computed by many different computational processes, there are many ways in which a given data structure can be represented in terms of simpler objects, and the choice of representation can have significant impact on the time and space requirements of processes that manipulate the data.
-> 
+>
 > Data may be represented differently by different parts of a program. This leads to the need to implement _generic operations_, which must handle many different types of data. Maintaining modularity in the presence of generic operations requires more powerful abstraction barriers than can be erected with simple data abstraction alone. In particular, the data-directed programming as a technique allows individual data representations to be designed in isolation and then combined additively (i.e., without modification).
 
 
@@ -65,7 +65,7 @@ It also reveals a merit of functional programming. It is more about "procedure",
 >
 > The value of expressing programs as sequence operations is that this helps us make program designs that are modular, that is, designs that are constructed by combining relatively independent pieces. We can encourage modular design by providing a library of standard components together with a conventional interface for connecting the components in flexible ways.
 >
-> Modular construction is a powerful strategy for controlling complexity in engineering design. In real signal-processing applications, for example, designers regularly build systems by cascading elements selected from standardized families of filters and transducers. Similarly, sequence operations provide a library of standard program elements that we can mix and match. 
+> Modular construction is a powerful strategy for controlling complexity in engineering design. In real signal-processing applications, for example, designers regularly build systems by cascading elements selected from standardized families of filters and transducers. Similarly, sequence operations provide a library of standard program elements that we can mix and match.
 >
 > It is important to know how data abstraction permits us to design programs without becoming enmeshed in the details of data representations, and how abstraction preserves for us the flexibility to experiment with alternative representations. Another powerful design principle for working with data structures is the use of conventional interfaces.
 
@@ -91,7 +91,37 @@ There are sequence of layers of language --
 
 In each level, the element that is defined is to talk about everything in this linguistic level, by using the items defined in the lower level. These levels at linguistics is much more robust than building a system with _tree_structure_, in which each node goes down to specific leaf node to do some specific job.
 
-_Quote of the lecture_: "Embedded something in the language is desirable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language." 
+_Some notes from the example of operating pictures_. It emphasizes
+again about the importance of combination and abstraction. At each
+stage, it is useful to use the "wishful thinking" to define the basic
+elements of both data and procedures. The combination of data is to
+build compound data with more complex inner structure, while it is
+also possible to build higher-order procedure by _simply_ treat
+procedures and data alike -- summarize an abstraction of procedure
+with input of other lower-level procedures and leave out the "data" in
+a lambda function, and then feed each input procedure the
+corresponding data with this lambda. For example:
+
+``` abap
+(define (square-of-four tl tr bl br)
+  (lambda (painter)
+    (let ((top (beside (tl painter) (tr painter)))
+          (bottom (beside (bl painter) (br painter))))
+      (below bottom top))))
+```
+It is also a good example of how to define the problem and distinguish
+complexities into different layers. A painting is divided into picture
+and frame. For the painting, there are all kinds of rotations and
+combinations. For a frame, it can be well defined by three
+vectors. For a vector, we need to be able to add, subtract, and scale
+them. On the other hand, for the simplest picture, it can be just
+direct lines. Each line has a starting point and a end point....
+This top-down approach makes the
+definitions of lower level very clear -- what constructor, selectors
+and operations are needed to support the current wishful thinking.
+
+
+_Quote of the lecture_: "Embedded something in the language is desirable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language."
 
 
 ## Lecture 6
