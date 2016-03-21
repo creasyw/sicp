@@ -1,5 +1,5 @@
 #lang racket
-
+(provie (all-defined-out))
 
 ;; As described during define the function, applying frame-coord-map
 ;; to a frame returns a procedure that, given a vector, returns a
@@ -69,3 +69,10 @@
       (lambda (frame)
         (paint-left frame)
                 (paint-right frame)))))
+
+
+(define (flip-horiz painter)
+  (transform-painter painter
+                     (make-vect 1.0 0.0)
+                     (make-vect 0.0 0.0)
+                     (make-vect 1.0 1.0)))
