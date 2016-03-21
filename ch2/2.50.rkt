@@ -1,5 +1,5 @@
 #lang racket
-(provie (all-defined-out))
+(provide (all-defined-out))
 
 ;; As described during define the function, applying frame-coord-map
 ;; to a frame returns a procedure that, given a vector, returns a
