@@ -91,7 +91,7 @@ There are sequence of layers of language --
 
 In each level, the element that is defined is to talk about everything in this linguistic level, by using the items defined in the lower level. These levels at linguistics is much more robust than building a system with _tree_structure_, in which each node goes down to specific leaf node to do some specific job.
 
-_Some notes from the example of operating pictures_. It emphasizes
+> _Some notes from the example of operating pictures_. It emphasizes
 again about the importance of combination and abstraction. At each
 stage, it is useful to use the "wishful thinking" to define the basic
 elements of both data and procedures. The combination of data is to
@@ -102,14 +102,15 @@ with input of other lower-level procedures and leave out the "data" in
 a lambda function, and then feed each input procedure the
 corresponding data with this lambda. For example:
 
-``` abap
+```scheme
 (define (square-of-four tl tr bl br)
   (lambda (painter)
     (let ((top (beside (tl painter) (tr painter)))
           (bottom (beside (bl painter) (br painter))))
       (below bottom top))))
 ```
-It is also a good example of how to define the problem and distinguish
+
+> It is also a good example of how to define the problem and distinguish
 complexities into different layers. A painting is divided into picture
 and frame. For the painting, there are all kinds of rotations and
 combinations. For a frame, it can be well defined by three
@@ -120,6 +121,22 @@ This top-down approach makes the
 definitions of lower level very clear -- what constructor, selectors
 and operations are needed to support the current wishful thinking.
 
+> The fundamental **data abstractions**, painters, are implemented using
+procedural representations, which _enables the language to handle
+different basic drawing capabilities in a uniform way_. The means of
+**combination** satisfy the closure property, which _permits us to easily
+build up complex designs_. Finally, all the tools for abstracting
+procedures are available to us for _abstracting means of combination_
+for painters.
+
+> This is the approach of stratified design, the notion that a complex
+system should be structured as a sequence of levels that are described
+using a sequence of languages. Each level is constructed by combining
+parts that are regarded as primitive at that level, and the parts
+constructed at each level are used as primitives at the next
+level. _The language used at each level of a stratified design has
+primitives, means of combination, and means of abstraction appropriate
+to that level of detail_.
 
 _Quote of the lecture_: "Embedded something in the language is desirable, because you don't loose the virtue of the original language. LISP is a lousy language to do any particular job. But it is really powerful, so it is extremely useful to figure out the right language and to embed it into the LISP. This is the real power of this language."
 
