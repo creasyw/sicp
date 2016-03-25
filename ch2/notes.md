@@ -148,8 +148,15 @@ It is reasonable to define problem by splitting it into multiple predicates (pro
 Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
 
 
-## _Side note for racket##
+### _Side note for racket_
 
 - `(cons 1 2)` returns a pair, and `(cons 1 '(2))` returns a list `'(1 2)`. The counterpart is that the `cdr` of a list is a **list** without the original leading element, while the `cdr` of a pair is the 2nd **element** of the pair.
 - There are quite a few interesting _start_ functions for pair and list, such as `append*`. Its usage is `(append* lst ... lsts)`, and is equal to `(apply append lst ... lsts)`.
 - There is not a `flatmap` as the example of "nested mappings" in the SICP, but there is a `append-map`, which is self-explanatory and equavelant to `(append* (map ...))`.
+
+#### The differences among `eq?`, `eqv?`, and `equal?`
+
+- `eq?` return #t if v1 and v2 refer to the same object, #f
+- Two values are `eqv?` if and only if they are `eq?`, unless otherwise
+specified for a particular datatype. The number and character datatypes are the only ones for which eqv? differs from `eq?`. Two numbers are `eqv?` when they have the same exactness, precision, and are both equal and non-zero, both `0.0`, both `0.0f0`, both `-0.0`, both `-0.0f0`, both `+nan.0`, or both `+nan.f`—considering real and imaginary components separately in the case of complex numbers. Two characters are `eqv`? when their `char->integer` results are equal.
+- Two values are `equal?` if and only if they are `eqv?`, unless otherwise specified for a particular datatype. Datatypes with further specification of `equal?` include strings, byte strings, pairs, mutable pairs, vectors, boxes, hash tables, and inspectable structures. In the last six cases, equality is recursively defined; if both v1 and v2 contain reference cycles, they are equal when the infinite unfoldings of the values would be equal. See also `gen:equal+hash` and `prop:impersonator-of`.
