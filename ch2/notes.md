@@ -145,6 +145,17 @@ _Quote of the lecture_: "Embedded something in the language is desirable, becaus
 
 It is reasonable to define problem by splitting it into multiple predicates (procedure). It makes the syntax easy to understand, and serves more of an interface for human understanding. Meanwhile, designing a program in a top-down level has a similar effect as TDD -- the lower-level representations are defined by interface first and then the implementation. This approach also set the abstraction barriers which makes the higher-level rules (derivatives in this lecture) independent from the implementation.
 
+> Symbolic differentiation is of special historical significance in
+Lisp. It was one of the motivating examples behind the development of
+a computer language for symbol manipulation. Furthermore, it marked
+the beginning of the line of research that led to the development of
+powerful systems for symbolic mathematical work, which are currently
+being used by a growing number of applied mathematicians and physicists.
+
+It is made possible by separate the algorithms from data
+representations via building abstraction barriers (predicates,
+selectors, and constructors).
+
 Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
 
 
