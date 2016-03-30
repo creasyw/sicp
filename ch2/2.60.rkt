@@ -34,7 +34,14 @@
 ;; in the question 2.59. The most effective and time-saving way is:
 ;; (define (build-set lst)
 ;;   (set->list (list->set lst)))
-;; with O(logN) to build the set from list,
+;; with O(NlogN) to build the set from list,
 ;; though it seems "red herring" as using built-in set to implement set...
 ;; The implemented method use O(NlogN) sorting and O(N) to eliminate duplicated
 ;; items. So, the overall complexity for build-set is O(NlogN).
+;; The ordered list is beneficial in three folds:
+;; 1) The search in any element within the list is O(lgN)
+;; 2) The upper- and lower- bounds of the list are helpful to exclude
+;;    items out of the range at the first place
+;; 3) Generate the set from list takes O(NlogN), while maintaining it
+;;    only takes linear time, based on the assumption that the list is
+;;    already in order. That is the case for both intersection and union
