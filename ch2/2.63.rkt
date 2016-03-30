@@ -24,11 +24,11 @@
 
 ;; a) two functions are the same for every tree
 ;; b) For the 1st implementation: O(logN)*O(N/2)  (assuming the tree is balanced)
-;;    Its first part is the depth of the tree and the second part is for "append" in every level
-;;    Hence, the overall complexity is O(NlogN) (it could also written as T(n)=2T(n/2)+O(n/2).)
-;;    For the 2nd implementation, every node evokes once with O(1) complexity for "cons",
-;;    Hence its overall complexity is O(N).
-
+;;    Its first part is the depth of the tree and the second part is
+;;    for "append" in every level Hence, the overall complexity is
+;;    O(NlogN) (it could also written as T(n)=2T(n/2)+O(n/2)). For the
+;;    2nd implementation, every node evokes once with O(1) complexity
+;;    for "cons", Hence its overall complexity is O(N).
 
 ;; The implementation of "append" in source code
 ;; Basically, it iterates l1 and make the l2 as the cdr of the last item in l1
