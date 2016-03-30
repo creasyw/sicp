@@ -152,11 +152,59 @@ the beginning of the line of research that led to the development of
 powerful systems for symbolic mathematical work, which are currently
 being used by a growing number of applied mathematicians and physicists.
 
-It is made possible by separate the algorithms from data
-representations via building abstraction barriers (predicates,
-selectors, and constructors).
+> Since the differentiation program is defined in terms of abstract
+data, we can modify it to work with different representations of
+expressions solely by changing the predicates, selectors, and
+constructors that define the representation of the algebraic
+expressions on which the differentiator is to operate. It is made
+possible by separate the algorithms from data representations via
+building abstraction barriers (predicates, selectors, and constructors).
 
-Quotation using at symbolic programming is a means to stop the interpreter getting deeper. By doing so, it is able to build layers of abstraction upon layers so that the language can be more powerful.
+Some data structures are straightforward in the data representation,
+while the other might not. `Set` is a valid example for the latter
+case. In this scenario --
+> the choice of a
+representation is not so obvious. Indeed, there are a number of
+possible representations, and they differ significantly from one
+another in several ways. Informally, a set is simply a collection of
+distinct objects. **To give a more precise definition we can employ the
+method of data abstraction**. That is, we define ``set'' by specifying
+the operations that are to be used on sets. These are union-set,
+intersection-set, element-of-set?, and adjoin-set.
+
+**Concerning the data representations**, the ordered lists are
+beneficial in three folds compared with the unordered ones:
+
+1. The search in any element within the list is O(lgN) (with the
+   virtue from the binary tree)
+2. The upper- and lower- bounds of the list are helpful to exclude
+   items out of the range at the first place
+3. Generate the set from list takes O(NlogN), while maintaining it
+   only takes linear time, based on the assumption that the list is
+   already in order. That is the case for both intersection and union
+
+
+The advantage of the tree representation is this: if the tree is
+"balanced", each of these subtrees will be about half the size of
+the original. Thus, in one step we have reduced the problem of
+searching a tree of size n to searching a tree of size n/2. We should
+expect that the number of steps needed to search a tree of size n
+grows as (log n).For large sets, this will be a significant speedup
+over the previous representations. Information-retrieval systems in
+which records have to be "randomly accessed" are typically
+implemented by a tree-based method.
+
+To maintain a roughly balanced tree structure, _one way_ is to define
+an operation that **transforms an arbitrary tree into a balanced tree
+with the same elements**. Then we can perform this transformation after
+every few adjoin-set operations to keep our set in balance. There are
+also _other ways_ to solve this problem, most of which involve **designing
+new data structures for which searching and insertion both can be done
+in (log n) steps**.
+
+Quotation using at symbolic programming is a means to stop the
+interpreter getting deeper. By doing so, it is able to build layers of
+abstraction upon layers so that the language can be more powerful.
 
 
 ### _Side note for racket_
