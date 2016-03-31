@@ -219,3 +219,20 @@ abstraction upon layers so that the language can be more powerful.
 - Two values are `eqv?` if and only if they are `eq?`, unless otherwise
 specified for a particular datatype. The number and character datatypes are the only ones for which eqv? differs from `eq?`. Two numbers are `eqv?` when they have the same exactness, precision, and are both equal and non-zero, both `0.0`, both `0.0f0`, both `-0.0`, both `-0.0f0`, both `+nan.0`, or both `+nan.f`—considering real and imaginary components separately in the case of complex numbers. Two characters are `eqv`? when their `char->integer` results are equal.
 - Two values are `equal?` if and only if they are `eqv?`, unless otherwise specified for a particular datatype. Datatypes with further specification of `equal?` include strings, byte strings, pairs, mutable pairs, vectors, boxes, hash tables, and inspectable structures. In the last six cases, equality is recursively defined; if both v1 and v2 contain reference cycles, they are equal when the infinite unfoldings of the values would be equal. See also `gen:equal+hash` and `prop:impersonator-of`.
+
+
+### Miscellaneous
+
+In general, we can attain significant savings if we use variable-length
+prefix codes that take advantage of the relative frequencies of the symbols
+in the messages to be encoded. One particular scheme for doing this is
+called the Huffman encoding method.
+
+A Huffman code can be represented as a binary tree whose leaves are
+the symbols that are encoded. At each non-leaf node of the tree there
+is a set containing all the symbols in the leaves that lie below the
+node. In addition, each symbol at a leaf is assigned a weight (which
+is its relative frequency), and each non-leaf node contains a weight
+that is the sum of all the weights of the leaves lying below it. The
+weights are not used in the encoding or the decoding process, but are
+used to help construct the tree.
