@@ -4,6 +4,9 @@
 (require "complex_num_table.rkt")
 (provide (all-defined-out))
 ;; tagging
+;; It is similar to dispatch a data with tag, but the tag is no longer
+;; the means for condition in the operations, but as the column
+;; identifier to find the corresponding operation.
 (define (attach-tag type-tag contents)
   (cons type-tag contents))
 (define (type-tag datum)
