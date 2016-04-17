@@ -1,5 +1,3 @@
-## Lecture 4
-
 > A procedure can be regarded as a pattern for the local evolution of a process. Higher-order procedures enhance the power of our language by enabling us to manipulate, and thereby to reason in terms of, general methods of computation. **This is much of the essence of programming**. A procedure used as an element in creating a more complex procedure could be regarded not only as a collection of particular operations but also as a procedural abstraction.
 >
 > Another key aspect of any programming language: the means it provides for building abstractions by combining data objects to form compound data. For the same reasons that we want compound procedures: to elevate the conceptual level at which we can design our programs, to increase the modularity of our designs, and to enhance the expressive power of our language. Just as the ability to define procedures enables us to deal with processes at a higher conceptual level than that of the primitive operations of the language, the ability to construct compound data objects enables us to deal with data at a higher conceptual level than that of the primitive data objects of the language.
@@ -183,6 +181,8 @@ beneficial in three folds compared with the unordered ones:
    only takes linear time, based on the assumption that the list is
    already in order. That is the case for both intersection and union
 
+Actually, if some operations has to repeatedly perform upon a list. It
+is almost always a good idea to have the list sorted.
 
 The advantage of the tree representation is this: if the tree is
 "balanced", each of these subtrees will be about half the size of
@@ -206,6 +206,93 @@ Quotation using at symbolic programming is a means to stop the
 interpreter getting deeper. By doing so, it is able to build layers of
 abstraction upon layers so that the language can be more powerful.
 
+Data abstraction -- a methodology for structuring systems in such a
+way that much of a program can be specified independent of the choices
+involved in implementing the data objects that the program
+manipulates. The key idea was to erect an abstraction barrier -- the
+selectors and constructors -- that isolates the usages from their
+underlying representation. _A similar_ abstraction barrier isolates
+the details of the procedures that perform primitive operations from
+the "higher-level" procedures. -- These two barriers are the basic
+constitutes of an object.
+
+In addition to the data-abstraction barriers that isolate
+representation from use, we need abstraction barriers that isolate
+different design choices from each other and permit different choices
+to coexist in a single program. Furthermore, since large programs are
+often created by combining pre-existing modules that were designed in
+isolation, we need conventions that permit programmers to incorporate
+modules into larger systems **additively**, that is, without having to
+redesign or reimplement these modules.
+
+One way to view data abstraction is as an application of the
+"principle of least commitment", meaning that each layer of
+abstraction has the least commitment to the adjacent layers.
+
+The general strategy of checking the type of a datum and calling an
+appropriate procedure is called dispatching on type. The implementing
+the dispatch has **two** significant weaknesses. _One weakness_ is
+that the generic interface procedures must know about all the
+different representations. _Another weakness_ of the technique is that
+even though the individual representations can be designed separately,
+we must guarantee that no two procedures in the entire system have the
+same name. **The issue underlying both of these weaknesses is that the
+technique for implementing generic interfaces is not additive.**
+
+What we need is a means for modularizing the system design even
+further. This is provided by the programming technique known as
+data-directed programming. Its key idea is to handle generic
+operations in programs by dealing explicitly with operation-and-type
+tables.
+
+Another interesting feature introduced at operations upon different
+kinds of numbers is to set each numbering scheme as a module (object),
+which can be ad-hoc combining together. The conversions among them are
+procedures in nature and expressed as formula in math. Then, we can
+put these procedures into a 2D table, and use the flags of the schemes
+to pin the coordinate of specific conversion method. This further blurs
+the line between data and procedure, but makes perfect sense as the
+direct mapping from math. In this circumstance, the `apply` comes handy.
+
+> This coercion scheme has many advantages over the method of defining explicit
+cross-type operations, as outlined above. Although we still need to write coercion
+procedures to relate the types (possibly n2 procedures for a system with n types), we
+need to write only one procedure for each pair of types rather than a different
+procedure for each collection of types and each generic operation. What we are
+counting on here is the fact that the appropriate transformation between types
+depends only on the types themselves, not on the operation to be applied.
+
+The further refinement of the coercion structure is to put all schemes
+into a hierarchical (tower) structure, based on the nature of the
+numbers (problem). It is easy to embed new scheme into this structure
+by defining its higher and lower neighbors. It is also be more generic
+by defining the function `raise` to put all operands into the same
+level of this structure before doing any concrete operations.
+
+> Another advantage of a tower is that we can easily implement the
+> notion that every type "inherits" all operations defined on a
+> supertype. (It further blur the boundary of FP and OOP....)
+>
+> Yet another advantage of a tower over a more general hierarchy is
+> that it gives us a simple way to ``lower'' a data object to the
+> simplest representation.
+
+Note that the inheritance between the objects (or the tower
+data/procedure structure in this content) is superior to build the
+system. In other occasions, there are just several procedures in a
+parallel situation (logically or mathematically). The "table"
+structure is more suitable.
+
+The example of symbolic algebra is exquisitely placed to the
+abstraction layer that both `add` and `mul` are dispatched further to
+a specific number scheme, or another polynomial. The result is a kind
+of "**data-directed recursion**" in which, for example, a call to
+`mul-poly` will result in recursive calls to `mul-poly` in order to
+multiply the coefficients. If the coefficients of the coefficients
+were themselves polynomials (as might be used to represent polynomials
+in three variables), the data direction would ensure that the system
+would follow through another level of recursive calls, and so on
+through as many levels as the structure of the data dictates.
 
 ### _Side note for racket_
 
