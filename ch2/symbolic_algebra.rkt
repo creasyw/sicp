@@ -5,6 +5,7 @@
 
 (provide (all-defined-out))
 
+;; retrieve the generic functions from the table
 (define (add x y) (apply-generic 'add x y))
 (define (sub x y) (apply-generic 'sub x y))
 (define (mul x y) (apply-generic 'mul x y))
@@ -23,11 +24,11 @@
   ;; constructors and selectors for terms
   (define (the-empty-termlist) '())
   (define (empty-termlist? l) (null? l))
-  (define (make-term order coeff) (cons order coeff))
+  (define (make-term order coeff) (list order coeff))
   (define (first-term l) (car l))
   (define (rest-terms l) (cdr l))
   (define (order term) (car term))
-  (define (coeff term) (cdr term))
+  (define (coeff term) (cadr term))
 
   ;; operations for terms
   (define (negate term-list)
@@ -42,7 +43,7 @@
     ;; append term to the end of term-list
     (if (=zero? (coeff term))
         term-list
-        (append term-list (list term))))
+        (cons term term-list)))
 
   (define (add-terms l1 l2)
     (cond ((empty-termlist? l1) l2)
@@ -78,14 +79,14 @@
 
   ;; regular operations
   (define (add-poly p1 p2)
-    (if (same-variable? (variable p1) (variable p2))
+    (if (same-variable? p1 p2)
         (make-poly (variable p1)
                    (add-terms (term-list p1)
                               (term-list p2)))
         (error "Polys not in same var -- ADD-POLY" (list p1 p2))))
 
   (define (mul-poly p1 p2)
-    (if (same-variable? (variable p1) (variable p2))
+    (if (same-variable? p1 p2)
         (make-poly (variable p1)
                    (mul-terms (term-list p1)
                               (term-list p2)))
