@@ -11,6 +11,7 @@
 (define (mul x y) (apply-generic 'mul x y))
 (define (div x y) (apply-generic 'div x y))
 (define (=zero? x) (apply-generic '=zero? x))
+(define (negate n) (apply-generic 'negate n))
 
 (define (install-polynomial-package)
   ;; higher-level constructor and selectors
@@ -31,13 +32,9 @@
   (define (coeff term) (cadr term))
 
   ;; operations for terms
-  (define (negate term-list)
-    (define (helper acc tlst)
-      (if (empty-termlist? tlst)
-          acc
-          (let ((minus-one (make-term 0 -1)))
-            (helper (adjoin-term (mul-terms minus-one (car tlst)) acc) (cdr tlst)))))
-    (helper '() term-list))
+  (define (negate-list term-list)
+    (map (lambda (term) (make-term (order term) (negate (coeff term))))
+         term-list))
 
   (define (adjoin-term term term-list)
     ;; append term to the end of term-list
@@ -85,6 +82,13 @@
                               (term-list p2)))
         (error "Polys not in same var -- ADD-POLY" (list p1 p2))))
 
+  (define (sub-poly p1 p2)
+    (if (same-variable? p1 p2)
+        (make-poly (variable p1)
+                   (add-terms (term-list p1)
+                              (negate-list (term-list p2))))
+        (error "Polys not in same var -- SUB-POLY" (list p1 p2))))
+
   (define (mul-poly p1 p2)
     (if (same-variable? p1 p2)
         (make-poly (variable p1)
@@ -96,6 +100,8 @@
   (define (tag p) (attach-tag 'polynomial p))
   (put 'add '(polynomial polynomial)
        (lambda (p1 p2) (tag (add-poly p1 p2))))
+  (put 'sub '(polynomial polynomial)
+       (lambda (p1 p2) (tag (sub-poly p1 p2))))
   (put 'mul '(polynomial polynomial)
        (lambda (p1 p2) (tag (mul-poly p1 p2))))
   (put '=zero? '(polynomial)
@@ -139,6 +145,7 @@
   (put 'atangent '(custom-number custom-number)
        (lambda (x y) (tag (atan x y))))
   (put 'equ '(custom-number custom-number) =)
+  (put 'negate '(custom-number) (lambda (x) (tag (* -1 x))))
   (put '=zero? '(custom-number)
        (lambda (x) (= x 0)))
   (put 'make 'custom-number
