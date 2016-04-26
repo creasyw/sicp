@@ -1,10 +1,13 @@
 #lang racket
-;; it's easy to solve:
+;; solution 1:
 ;; sub -> add the negate of the second term
 ;;     -> negate = multiply the poly with -1.
-;; refer the solution in 2.87.rkt
+;;
+;; solution 2: Put the negate function in the number package, which
+;; actually makes more sense -- negate is to operate upon number.
+;; --> Then to negate a term-list is simply done by map.
 
-(require "2.87.rkt")
+(require "symbolic_algebra.rkt")
 (install-polynomial-package)
 (install-number-package)
 
