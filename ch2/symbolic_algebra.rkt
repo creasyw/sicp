@@ -110,6 +110,13 @@
 
 ;; ===========================
 
+;; similar to the function defined at the beginning of the file via
+;; apply-generic which retrieve functions that put into the table
+(define (equ x y) (apply-generic 'equ x y))
+(define (square-root n) (apply-generic 'square-root n))
+(define (sine n) (apply-generic 'sine n))
+(define (cosine n) (apply-generic 'cosine n))
+
 ;; ordinary number
 ;; tag: custom-number
 (define (install-number-package)
